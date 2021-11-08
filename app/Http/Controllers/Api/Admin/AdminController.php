@@ -55,10 +55,9 @@ class AdminController extends Controller
         return response()->json($data, 200);
     }   
 
-    
+
     public function destroyLandlord(Landlord $landlord, $id)
     {
-
         $landlord->delete();
 
         return response()->json(['message' => 'Landlord deleted successfully']);
