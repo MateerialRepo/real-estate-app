@@ -56,78 +56,29 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
     });
 
+
+    // Admin Routes
+    Route::prefix('v1/admin')->group(function () {
+        Route::post('/login', [AdminAuthController::class, 'login']);
+
+        Route::middleware('auth:admin')->group(function () {
+            Route::get('/', [AdminController::class, 'index']);
+
+            // Tenant activities
+            Route::get('/tenant', [AdminController::class, 'allTenants']);
+            Route::get('/tenant/{id}', [AdminController::class, 'singleTenant']);
+            Route::delete('/tenant/{id}', [AdminController::class, 'destroyTenant']);
+
+            // Landlord activities
+            Route::get('/landlord', [AdminController::class, 'allLandlords']);
+            Route::get('/landlord/{id}', [AdminController::class, 'singleLandlord']);
+            Route::delete('/landlord/{id}', [AdminController::class, 'destroyLandlord']);
+            
+
+            Route::post('/logout', [AdminAuthController::class, 'logout']);
+        });
+
+    });
+
 });
     
-//     Route::get('v1/admin/tenant', [AdminController::class, 'allTenants']);
-
-//     // Admin routes
-//     Route::prefix('v1/admin')->group(function () {
-    
-
-//     });
-
-//     // Tenant routes
-//     Route::prefix('v1/tenant')->group(function () {
-//         Route::post('/login', [AuthController::class, 'login']);
-//         Route::post('/register', [AuthController::class, 'register']);
-        
-//         //tickets or facilities
-//         Route::get('/ticket', [TicketController::class, 'fetchAll'] );
-//         Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle'] );
-//         Route::post('/ticket/create', [TicketController::class, 'createAndUpdate'] ); //not working
-//         Route::post('/ticket/comment/{unique_id}', [TicketController::class, 'ticketComment'] );
-//         Route::get('/ticket/resolve/{unique_id}', [TicketController::class, 'resolveTicket'] );
-//         Route::get('/ticket/reopen/{unique_id}', [TicketController::class, 'reopenTicket'] );
-//         Route::delete('/ticket/{unique_id}', [TicketController::class, 'deleteTicket'] );
-
-//         // Documents
-//         Route::get('/document', [DocumentController::class, 'fetchAllDocument'] );
-//         Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument'] );
-//         Route::post('/document/create', [DocumentController::class, 'createAndUpdate'] ); //not working
-//         Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument'] );
-
-//         // Tenant Routes
-//         Route::middleware('auth:tenant')->group(function () {
-//             Route::post('/add-update/referee', RefereeController::class);
-//             Route::post('/add-update/next-of-kin', NextOfKinController::class);
-//             Route::post('/tenant', [TenantController::class, 'updateProfile'] );
-//             Route::post('/tenant-kyc-update', [TenantController::class, 'updateUserKYC'] );
-//             Route::post('/tenant-profile-pic', [TenantController::class, 'uploadprofilepic'] );
-//             Route::post('/tenant-password-update', [TenantController::class, 'updatepassword'] );
-//             Route::post('/logout', [AuthController::class, 'logout'] );
-//         });
-
-        
-//     });
-
-
-//     // Landlord routes
-//     Route::prefix('landlord')->group(function () {
-//         Route::post('/login', [AuthController::class, 'login']);
-//         Route::post('/register', [AuthController::class, 'register']);
-
-//         //tickets or facilities
-//         Route::get('/ticket', [TicketController::class, 'fetchAll'] );
-//         Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle'] );
-//         Route::post('/ticket/create', [TicketController::class, 'createAndUpdate'] ); //not working
-//         Route::post('/ticket/comment/{unique_id}', [TicketController::class, 'ticketComment'] );
-//         Route::get('/ticket/resolve/{unique_id}', [TicketController::class, 'resolveTicket'] );
-//         Route::get('/ticket/reopen/{unique_id}', [TicketController::class, 'reopenTicket'] );
-//         Route::delete('/ticket/{unique_id}', [TicketController::class, 'deleteTicket'] );
-
-//         // Documents
-//         Route::get('/document', [DocumentController::class, 'fetchAllDocument'] );
-//         Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument'] );
-//         Route::post('/document/create', [DocumentController::class, 'createAndUpdate'] ); //not working
-//         Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument'] );
-
-//         // Landlord Routes
-//         Route::middleware('auth:landlord')->group(function () {
-//             Route::post('/landlord', [LandlordController::class, 'updateProfile'] );
-//             Route::post('/landlord-kyc-update', [LandlordController::class, 'updateUserKYC'] );
-//             Route::post('/landlord-profile-pic', [LandlordController::class, 'uploadprofilepic'] );
-//             Route::post('/landlord-password-update', [LandlordController::class, 'updatepassword'] );
-//             Route::post('/logout', [AuthController::class, 'logout'] );
-//         });
-//     });
-// });
