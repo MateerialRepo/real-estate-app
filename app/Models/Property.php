@@ -51,26 +51,9 @@ class Property extends Model
 
     ];
 
-    // public function setPropertyImagesAttribute($value)
-	// {
-	//     $property_images = [];
-
-	//     foreach ($value as $array_item) {
-	//         if (!is_null($array_item['key'])) {
-	//             $property_images[] = $array_item;
-	//         }
-	//     }
-
-	//     $this->attributes['property_images'] = json_encode($property_images);
-	// }
-
-    public function setPropertyImagesAttribute($value)
-    {
-        $this->attributes['property_images'] = json_encode($value);
-    }
 
 
-    
+
     public function tenant(){
         return $this->hasOne(Tenant::class);
     }

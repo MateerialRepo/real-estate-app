@@ -34,25 +34,32 @@ class PropertyController extends Controller
     public function createProperty(Request $request)
     {
         try{
-            $images=[];
-
+            $imageslink=[];
+            
             if($request->has('property_images')){
 
-                foreach($request->file('property_images') as $image){
-                    
+                $images = $request->file('property_images');
+
+                foreach($images as $key=>$image){
+                                     
                     // save each image to the server
                     $imageName = "property".time().'.'.$image->getClientOriginalExtension();
+
                     $image->move(public_path('/properties/propertyImages'), $imageName);
-                    $images[] = '/properties/propertyImages'.$imageName;
+                    $imageslink[$key] = env('APP_URL').'/properties/propertyImages/'.$imageName;
+
                 };
 
             };
 
+
             $landlord = Auth::guard('landlord')->user();
             $property_data = $request->all();
             $property_data['landlord_id'] = $landlord->id;
-            $property_data['property_images'] = json_encode($images);
+            $property_data['property_images'] = $imageslink;
             $property_data['property_amenities'] = json_encode($request->property_amenities);
+
+
 
             $property = Property::create($property_data);
             $data['status'] = 'Success';
