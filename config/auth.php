@@ -50,6 +50,16 @@ return [
             'driver' => 'passport',
             'provider' => 'tenants',
         ],
+
+        'landlord' => [
+            'driver' => 'passport',
+            'provider' => 'landlords',
+        ],
+
+        'admin' => [
+            'driver' => 'passport',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -78,6 +88,11 @@ return [
         'tenants' => [
             'driver' => 'eloquent',
             'model' => App\Models\Tenant::class,
+        ],
+        
+        'landlords' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Landlord::class,
         ],
 
         // 'users' => [

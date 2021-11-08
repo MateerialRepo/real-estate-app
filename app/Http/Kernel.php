@@ -66,11 +66,15 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.tenant' => \App\Http\Middleware\TenantMiddleware::class,
+        'auth.landlord' => \App\Http\Middleware\LandlordMiddleware::class,
+        'auth.admin' => \App\Http\Middleware\AdminMiddleware::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
     ];
 
     protected $middlewarePriority = [
         \App\Http\Middleware\TenantMiddleware::class,
+        \App\Http\Middleware\LandlordMiddleware::class,
+        \App\Http\Middleware\AdminMiddleware::class,
     ];
 }

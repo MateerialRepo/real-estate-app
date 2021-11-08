@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTenantsTable extends Migration
+class CreateLandlordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTenantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('landlords', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tenant_id')->default("TNT-" . mt_rand(10000000,99999999) . "-BRC");
+            $table->string('landlord_id')->default("LND-" . mt_rand(10000000,99999999) . "-BRC");
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -45,6 +45,6 @@ class CreateTenantsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('landlords');
     }
 }
