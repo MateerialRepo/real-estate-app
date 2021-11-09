@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->string('ticket_status');
             $table->string('ticket_title');
             $table->string('ticket_category');
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->json('ticket_img')->nullable();
             $table->string('landlord_id');
             $table->timestamps();

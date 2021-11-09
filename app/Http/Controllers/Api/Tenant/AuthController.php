@@ -13,10 +13,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Authcontroller Login worked successfully'
-        // ], 200);
 
         $tenant = Tenant::where('email', request()->email)->first();
 
@@ -48,12 +44,8 @@ class AuthController extends Controller
     }
 
 
-    public function register(Request $request) //TenantRequest 
+    public function register(TenantRequest $request) //TenantRequest 
     {
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Authcontroller Register worked successfully'
-        // ], 200);
 
         try {
             $tenant = Tenant::firstOrCreate($request->validated());

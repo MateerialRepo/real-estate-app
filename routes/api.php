@@ -38,6 +38,29 @@ Route::get('v1/tenant/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
+    // Tenant routes
+    Route::prefix('v1/tenant')->group(function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/login', [AuthController::class, 'login']);
+
+        Route::middleware('auth:tenant')->group(function () {
+            Route::get('/', [TenantController::class, 'index']);
+            Route::post('/add-update/referee', RefereeController::class);
+            Route::post('/add-update/next-of-kin', NextOfKinController::class);
+            // Route::post('/password-update', [TenantController::class, 'updatepassword']);
+            // Route::post('/update-profile', [TenantController::class, 'updateLandlord']);
+            // Route::post('/upload-pic', [TenantController::class, 'uploadprofilepic']);
+            // Route::get('/property', [PropertyController::class, 'index']);
+            // Route::get('/property/{id}', [PropertyController::class, 'getProperty']);
+            // Route::post('/save-property', [PropertyController::class, 'createProperty']);
+            // Route::delete('/property/{id}', [PropertyController::class, 'deleteProperty']);
+
+            Route::post('/logout', [LandlordAuthController::class, 'logout']);
+        });
+
+    });
+
+
     // LAndlord Routes
     Route::prefix('v1/landlord')->group(function () {
         Route::post('/register', [LandlordAuthController::class, 'register']);
@@ -48,6 +71,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']);
             Route::post('/password-update', [LandlordController::class, 'updatepassword']);
             Route::post('/update-profile', [LandlordController::class, 'updateLandlord']);
+            Route::post('/upload-pic', [LandlordController::class, 'uploadprofilepic']);
             Route::get('/property', [PropertyController::class, 'index']);
             Route::get('/property/{id}', [PropertyController::class, 'getProperty']);
             Route::post('/save-property', [PropertyController::class, 'createProperty']);

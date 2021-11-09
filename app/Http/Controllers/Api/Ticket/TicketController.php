@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Api\Ticket;
 
-use App\Http\Controllers\Controller;
+use App\Models\Ticket;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\TicketComment;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
 {
-    //create or Update Ticket
-    public function createAndUpdate(Request $request){
+    //create Ticket
+    public function createTicket(Request $request){
         try{
 
             $validator = Validator::make($request->all(), [
@@ -22,7 +27,6 @@ class TicketController extends Controller
                 return response()->json(['error'=>$validator->errors()], 401);
             };
 
-            $ticket_unique_id = 'TKT-'.Str::random(7).'-'.time();;
 
             $ticket_collection=[];
 
@@ -38,18 +42,17 @@ class TicketController extends Controller
 
             };
 
-            $user = Auth::user();
+            $tenant = Auth::guard('tenant')->user();
 
-            $ticket = Ticket::updateOrCreate(
+            $ticket = Ticket::create(
                 [
-                    'user_id' => $user->id,
-                    'ticket_unique_id' => $ticket_unique_id,
+                    'tenant_id' => $tenant->id,
                     'ticket_status' => 'Open', 
                     'ticket_title' => $request->ticket_title, 
                     'ticket_category' => $request->ticket_category, 
                     'description' => $request->description,
-                    'ticket_img' => json_encode($ticket_collection), 
-                    'assigned_id' => $request->assigned_id
+                    'ticket_img' => $ticket_collection, 
+                    'landlord_id' => $request->landlord_id
                 ]
             );
             
@@ -110,9 +113,9 @@ class TicketController extends Controller
     public function fetchAll(){
         try{
 
-            $user = Auth::user();
-            $tickets = Ticket::where('user_id','=', $user->id)
-                        ->orWhere('assigned_id','=', $user->id)
+            // $user = Auth::user();
+            $tenant = Auth::guard('tenant')->user();
+            $tickets = Ticket::where('tenant_id', $tenant->id)
                         ->orderBy('created_at', 'desc')->get();
 
             $data['status'] = 'Success';
@@ -131,10 +134,9 @@ class TicketController extends Controller
     // Fetch single ticket
     public function fetchSingle($unique_id){
         try{
-            $user = Auth::user();
-
-            $ticket = Ticket::where('ticket_unique_id', $unique_id)
-                        ->with('user', 'ticketComment')->get();
+            // $user = Auth::user();
+            // $tenant = Auth::guard('tenant')->user();
+            $ticket = Ticket::where('ticket_unique_id', $unique_id)->get();
 
             if(!$ticket){
                 $data['status'] = 'Failed';
@@ -186,9 +188,8 @@ class TicketController extends Controller
     public function deleteTicket($unique_id){
         try{
 
-            $user = Auth::user();
-            $ticket = Ticket::where('ticket_unique_id', $unique_id)
-                        ->with('user', 'ticketComment')->get();
+            // $user = Auth::user();
+            $ticket = Ticket::where('ticket_unique_id', $unique_id)->get();
 
             if(!$ticket){
                 $data['status'] = 'Failed';
