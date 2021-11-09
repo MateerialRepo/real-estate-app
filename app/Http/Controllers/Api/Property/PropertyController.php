@@ -91,7 +91,7 @@ class PropertyController extends Controller
                 foreach($images as $key=>$image){
                                      
                     // save each image to the server
-                    $imageName = "property".time().'.'.$image->getClientOriginalExtension();
+                    $imageName = "property".time().$key.'.'.$image->getClientOriginalExtension();
                     $image->move(public_path('/properties/propertyImages'), $imageName);
                     $imageslink[$key] = env('APP_URL').'/properties/propertyImages/'.$imageName;
                 };

@@ -16,7 +16,7 @@ class PropertyVerificationController extends Controller
         if($request->has('property_document')){
 
             foreach($request->file('property_document') as $key => $document){
-                $fileName = $document->getClientOriginalName();
+                $fileName = time().$key.$document->getClientOriginalName();
                 $document->move(public_path('/properties/propertyDocuments'), $fileName);
                 $filepath = env('APP_URL').'/properties/propertyDocuments/'.$fileName;
                 $documentPath[$key] = $filepath;

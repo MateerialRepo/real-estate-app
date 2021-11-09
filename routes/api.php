@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Tenant\AuthController;
 use App\Http\Controllers\Api\Tenant\TenantController;
 use App\Http\Controllers\Api\Ticket\TicketController;
 use App\Http\Controllers\Api\Tenant\RefereeController;
+use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Tenant\NextOfKinController;
 use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
