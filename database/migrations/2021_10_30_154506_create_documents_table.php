@@ -22,9 +22,8 @@ class CreateDocumentsTable extends Migration
             $table->string('document_category');
             $table->string('document_url');
             $table->string('document_format');
-            $table->string('description');
-            $table->foreignId('assigned_id')
-                    ->constrained('users');
+            $table->text('description');
+            $table->string('landlord_id');
             $table->timestamps();
         });
     }

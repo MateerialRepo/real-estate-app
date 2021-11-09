@@ -21,6 +21,7 @@ class Property extends Model
     protected $fillable = [
         'landlord_id',
         'property_amount',
+        'property_unique_id',
         'property_type',
         'is_serviced',
         'property_title',

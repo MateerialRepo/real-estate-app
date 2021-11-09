@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    protected $fillable = [
+        'tenant_id',
+        'document_unique_id',
+        'document_category',
+        'document_url',
+        'document_format',
+        'description',
+        'landlord_id'
+    ];
+
+
+
+    // public function tenant(){
+    //     return $this->hasOne(Tenant::class);
+    // }
+
+    // public function landlord(){
+    //     return $this->hasOne(Landlord::class);
+    // }
 }

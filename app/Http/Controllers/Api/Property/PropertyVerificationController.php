@@ -23,20 +23,20 @@ class PropertyVerificationController extends Controller
             }
         }
 
-        $propertyVerification = PropertyVerification::create([
+        PropertyVerification::create([
             'property_id' => $id,
-            'verification_type' => $request->verification_type,
+            'document_type' => $request->document_type,
             'property_document' => $documentPath,
             'description' => $request->description,
         ]);
 
 
-        $property = Property::find($id);
-        $property->is_verified = true;
-        $property->save();
+        // $property = Property::find($id);
+        // $property->is_verified = true;
+        // $property->save();
 
         $data['status'] = 'Success';
-        $data['message'] = 'Property Successfully Verified';
+        $data['message'] = 'Property Verification sent to Admin';
         return response()->json($data, 201);
     }
 }

@@ -22,9 +22,9 @@ class PropertyController extends Controller
     }
 
     //fetches a single property
-    public function getProperty($id)
+    public function getProperty($unique_id)
     {
-        $property = Property::find($id);
+        $property = Property::where('property_unique_id',$unique_id)->get();
         $data['status'] = 'Success';
         $data['message'] = 'Fetched property Successfully';
         $data['property'] = $property;
@@ -44,7 +44,7 @@ class PropertyController extends Controller
                 foreach($images as $key=>$image){
                                      
                     // save each image to the server
-                    $imageName = "property".time().'.'.$image->getClientOriginalExtension();
+                    $imageName = "property".time().$key.'.'.$image->getClientOriginalExtension();
 
                     $image->move(public_path('/properties/propertyImages'), $imageName);
                     $imageslink[$key] = env('APP_URL').'/properties/propertyImages/'.$imageName;
@@ -57,6 +57,7 @@ class PropertyController extends Controller
             $landlord = Auth::guard('landlord')->user();
             $property_data = $request->all();
             $property_data['landlord_id'] = $landlord->id;
+            $property_data['property_unique_id'] = "PRP-".mt_rand(10000000,99999999)."-BRC";
             $property_data['property_images'] = $imageslink;
             $property_data['property_amenities'] = json_encode($request->property_amenities);
 
@@ -78,7 +79,7 @@ class PropertyController extends Controller
 
 
     //save property
-    public function updateProperty(Request $request, $id)
+    public function updateProperty(Request $request, $unique_id)
     {
         try{
             $imageslink=[];
@@ -102,11 +103,10 @@ class PropertyController extends Controller
                 $property_data['property_images'] = $imageslink;
                 $property_data['property_amenities'] = json_encode($request->property_amenities);
 
-                $property = Property::find($id);
-                $property->update($property_data);
+                Property::where('property_unique_id',$unique_id)->update($property_data);
                 $data['status'] = 'Success';
                 $data['message'] = 'Property Successfully Updated';
-                $data['data'] = $property;
+                $data['data'] = Property::where('property_unique_id',$unique_id)->get();
                 return response()->json($data, 200);
 
             } else {
@@ -116,7 +116,7 @@ class PropertyController extends Controller
                 $property_data['landlord_id'] = $landlord->id;
                 $property_data['property_amenities'] = json_encode($request->property_amenities);
 
-                $property = Property::find($id);
+                $property = Property::where('property_unique_id',$unique_id)->get;;
                 $property->update($property_data);
                 $data['status'] = 'Success';
                 $data['message'] = 'Property Successfully Updated';
@@ -134,11 +134,10 @@ class PropertyController extends Controller
 
 
     //delete property
-    public function deleteProperty($id)
+    public function deleteProperty($unique_id)
     {
         try{
-            $property = Property::find($id);
-            $property->delete();
+            Property::where('property_unique_id',$unique_id)->delete();
             $data['status'] = 'Success';
             $data['message'] = 'Property Successfully Deleted';
             return response()->json($data, 200);
