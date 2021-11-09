@@ -14,9 +14,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
-
-    // protected $with = ['referee'];
-
     
 
     protected $fillable = [
@@ -61,7 +58,5 @@ class Landlord extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function referee(){
-        return $this->hasOne(Referee::class);
-    }
+  
 }

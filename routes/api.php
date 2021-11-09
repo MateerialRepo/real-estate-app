@@ -9,8 +9,8 @@ use App\Http\Controllers\Api\Tenant\RefereeController;
 use App\Http\Controllers\Api\Tenant\NextOfKinController;
 use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
+use App\Http\Controllers\Api\Property\PropertyController;
 use App\Http\Controllers\Api\Landlord\LandlordAuthController;
-use App\Http\Controllers\Api\Landlord\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,10 +46,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::middleware('auth:landlord')->group(function () {
             Route::get('/', [LandlordController::class, 'index']);
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']);
+            Route::post('/password-update', [LandlordController::class, 'updatepassword']);
             Route::post('/update-profile', [LandlordController::class, 'updateLandlord']);
-            Route::post('/save-property', [PropertyController::class, 'createProperty']);
             Route::get('/property', [PropertyController::class, 'index']);
             Route::get('/property/{id}', [PropertyController::class, 'getProperty']);
+            Route::post('/save-property', [PropertyController::class, 'createProperty']);
+            Route::delete('/property/{id}', [PropertyController::class, 'deleteProperty']);
 
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });
@@ -73,7 +75,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/landlord', [AdminController::class, 'allLandlords']);
             Route::get('/landlord/{id}', [AdminController::class, 'singleLandlord']);
             Route::delete('/landlord/{id}', [AdminController::class, 'destroyLandlord']);
-            
+
 
             Route::post('/logout', [AdminAuthController::class, 'logout']);
         });

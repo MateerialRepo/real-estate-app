@@ -15,6 +15,10 @@ class CreatePropertyVerificationsTable extends Migration
     {
         Schema::create('property_verifications', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('property_id')->constrained();
+            $table->string('document_type');
+            $table->json('property_document');
+            $table->string('description');
             $table->timestamps();
         });
     }
