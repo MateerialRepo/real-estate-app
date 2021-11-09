@@ -4,7 +4,6 @@
 /public/landlords
 /public/tenants
 /public/properties
-/storage/*.key
 /vendor
 .env
 .env.backup
