@@ -114,7 +114,7 @@ class PropertyController extends Controller
                 $landlord = Auth::guard('landlord')->user();
                 $property_data = $request->all();
                 $property_data['landlord_id'] = $landlord->id;
-                $property_data['property_amenities'] = json_encode($request->property_amenities);
+                $property_data['property_amenities'] =$request->property_amenities;
 
                 $property = Property::where('property_unique_id',$unique_id)->update($property_data);
                 $data['status'] = 'Success';
