@@ -59,7 +59,7 @@ class PropertyController extends Controller
             $property_data['landlord_id'] = $landlord->id;
             $property_data['property_unique_id'] = "PRP-".mt_rand(10000000,99999999)."-BRC";
             $property_data['property_images'] = $imageslink;
-            $property_data['property_amenities'] = json_encode($request->property_amenities);
+            $property_data['property_amenities'] = $request->property_amenities;
 
 
 
@@ -101,7 +101,7 @@ class PropertyController extends Controller
                 $property_data = $request->all();
                 $property_data['landlord_id'] = $landlord->id;
                 $property_data['property_images'] = $imageslink;
-                $property_data['property_amenities'] = json_encode($request->property_amenities);
+                $property_data['property_amenities'] = $request->property_amenities;
 
                 Property::where('property_unique_id',$unique_id)->update($property_data);
                 $data['status'] = 'Success';
@@ -116,8 +116,7 @@ class PropertyController extends Controller
                 $property_data['landlord_id'] = $landlord->id;
                 $property_data['property_amenities'] = json_encode($request->property_amenities);
 
-                $property = Property::where('property_unique_id',$unique_id)->get;;
-                $property->update($property_data);
+                $property = Property::where('property_unique_id',$unique_id)->update($property_data);
                 $data['status'] = 'Success';
                 $data['message'] = 'Property Successfully Updated';
                 $data['data'] = $property;

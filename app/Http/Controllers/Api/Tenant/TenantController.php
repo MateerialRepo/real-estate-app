@@ -39,7 +39,7 @@ class TenantController extends Controller
      */
     public function show()
     {
-        return Auth::tenant()->load('tenantNextOfKin', 'tenantReferee');
+        return Auth::user();
 
     }
 

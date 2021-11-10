@@ -46,7 +46,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::post('/login', [AuthController::class, 'login']);
 
         Route::middleware('auth:tenant')->group(function () {
-            Route::get('/', [TenantController::class, 'index']);
+            Route::get('/', [TenantController::class, 'show']);
             Route::post('/add-update/referee', RefereeController::class);
             Route::post('/add-update/next-of-kin', NextOfKinController::class);
             

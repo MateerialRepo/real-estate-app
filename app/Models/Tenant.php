@@ -12,7 +12,7 @@ class Tenant extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $with = ['referee'];
+    protected $with = ['referee', 'nextOfKin'];
 
     protected $fillable = [
         'first_name',
