@@ -6,6 +6,7 @@ use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CreatePropertyRequest;
 
 class PropertyController extends Controller
 {
@@ -32,7 +33,7 @@ class PropertyController extends Controller
     }
 
     //save property
-    public function createProperty(Request $request)
+    public function createProperty(CreatePropertyRequest $request)
     {
         try{
             $imageslink=[];
@@ -60,6 +61,7 @@ class PropertyController extends Controller
             $property_data['property_unique_id'] = "PRP-".mt_rand(10000000,99999999)."-BRC";
             $property_data['property_images'] = $imageslink;
             $property_data['property_amenities'] = $request->property_amenities;
+            $property_data['lga'] = "none";
 
 
 
