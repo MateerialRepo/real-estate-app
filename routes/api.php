@@ -46,6 +46,14 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/upload-pic', [TenantController::class, 'uploadProfilePic']); //create and test
             Route::post('/add-update/referee', RefereeController::class);
             Route::post('/add-update/next-of-kin', NextOfKinController::class);
+            // ticket routes
+            Route::get('/ticket', [TicketController::class, 'fetchAll']);
+            Route::get('/ticket/{$unique_id}', [TicketController::class, 'fetchSingle']);
+            Route::post('/ticket', [TicketController::class, 'createTicket']);
+            Route::post('/ticket/{$unique_id}/resolve', [TicketController::class, 'resolveTicket']);
+            Route::post('/ticket/{$unique_id}/reopen', [TicketController::class, 'reopenTicket']);
+            Route::delete('/ticket/{$unique_id}', [TicketController::class, 'deleteTicket']);
+
 
             Route::post('/logout', [AuthController::class, 'logout']);
         });

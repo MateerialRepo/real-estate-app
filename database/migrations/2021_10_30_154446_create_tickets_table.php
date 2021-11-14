@@ -16,7 +16,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tenant_id')->constrained();
-            $table->string('ticket_unique_id')->default("TKT-" . mt_rand(10000000,99999999) . "-BRC");
+            $table->string('ticket_unique_id');
             $table->string('ticket_status');
             $table->string('ticket_title');
             $table->string('ticket_category');

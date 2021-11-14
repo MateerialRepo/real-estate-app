@@ -44,7 +44,7 @@ class CreatePropertiesTable extends Migration
             $table->json('property_amenities')->nullable();
             $table->string('side_attraction_details')->nullable();
             $table->string('is_available');
-            $table->boolean('is_verified')->default(false);
+            $table->string('is_verified')->default('not verified');
             $table->timestamps();
         });
     }

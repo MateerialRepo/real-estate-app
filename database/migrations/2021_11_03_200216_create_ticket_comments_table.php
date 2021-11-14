@@ -16,7 +16,7 @@ class CreateTicketCommentsTable extends Migration
         Schema::create('ticket_comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained();
-            $table->string('comment');
+            $table->text('comment');
             $table->string('commenter_id');
             $table->timestamps();
         });

@@ -9,7 +9,7 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $with = ['ticketComment'];
 
     protected $casts = [
         'ticket_img' => 'array',
@@ -28,11 +28,18 @@ class Ticket extends Model
 
 
 
-    public function tenant(){
+    public function tenant()
+    {
         return $this->hasOne(Tenant::class);
     }
 
-    public function landlord(){
+    public function landlord()
+    {
         return $this->hasOne(Landlord::class);
+    }
+
+    public function ticketComment()
+    {
+        return $this->hasMany(TicketComment::class);
     }
 }

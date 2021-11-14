@@ -15,10 +15,10 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('document_unique_id')->default("DOC-" . mt_rand(10000000,99999999) . "-BRC");
+            $table->string('document_unique_id');
             $table->foreignId('tenant_id')
-                    ->constrained()
-                    ->onDelete('cascade');
+                ->constrained()
+                ->onDelete('cascade');
             $table->string('document_category');
             $table->string('document_url');
             $table->string('document_format');
