@@ -25,16 +25,9 @@ use App\Http\Controllers\Api\Property\PropertyVerificationController;
 |
 */
 
-Route::get('/test', function(){
+Route::get('/test', function () {
     return 'API is up+';
 });
-
-Route::get('v1/tenant/register', [AuthController::class, 'register']);
-Route::get('v1/tenant/login', [AuthController::class, 'login']);
-
-// Landlord test routes
-// Route::get('v1/landlord/register', [LandlordAuthController::class, 'register']);
-// Route::get('v1/landlord/login', [LandlordAuthController::class, 'login']);
 
 
 
@@ -47,12 +40,15 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
         Route::middleware('auth:tenant')->group(function () {
             Route::get('/', [TenantController::class, 'show']);
+            Route::post('/kyc-update', [TenantController::class, 'updateTenantKYC']); //test
+            Route::post('/password-update', [TenantController::class, 'updatePassword']); //create and test
+            Route::post('/update-profile', [TenantController::class, 'update']); //test
+            Route::post('/upload-pic', [TenantController::class, 'uploadProfilePic']); //create and test
             Route::post('/add-update/referee', RefereeController::class);
             Route::post('/add-update/next-of-kin', NextOfKinController::class);
-            
+
             Route::post('/logout', [AuthController::class, 'logout']);
         });
-
     });
 
 
@@ -76,7 +72,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });
-
     });
 
 
@@ -97,11 +92,14 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/landlord/{id}', [AdminController::class, 'singleLandlord']);
             Route::delete('/landlord/{id}', [AdminController::class, 'destroyLandlord']);
 
+            // Property activities                                              
+            Route::get('/property', [AdminController::class, 'allProperties']);
+            Route::get('/property/{id}', [AdminController::class, 'singleProperty']);
+            Route::delete('/property/{id}', [AdminController::class, 'destroyProperty']);
+            Route::post('/property/{id}/verify', [PropertyVerificationController::class, 'adminVerifyProperty']);
+
 
             Route::post('/logout', [AdminAuthController::class, 'logout']);
         });
-
     });
-
 });
-    

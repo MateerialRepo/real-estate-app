@@ -9,7 +9,8 @@ class Property extends Model
 {
     use HasFactory;
 
-    // protected $with = ['referee'];
+    protected $with = ['propertyVerificatiion'];
+
     // Allow any field to be inserted
     protected $guarded = [];
 
@@ -55,11 +56,18 @@ class Property extends Model
 
 
 
-    public function tenant(){
+    public function tenant()
+    {
         return $this->hasOne(Tenant::class);
     }
 
-    public function landlord(){
+    public function landlord()
+    {
         return $this->hasOne(Landlord::class);
+    }
+
+    public function propertyVerification()
+    {
+        return $this->hasOne(PropertyVerification::class);
     }
 }

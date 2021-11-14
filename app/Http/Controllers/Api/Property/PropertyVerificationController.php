@@ -12,13 +12,13 @@ class PropertyVerificationController extends Controller
     ///Landlord property verification
     public function verifyProperty(Request $request, $id)
     {
-        $documentPath=[];
-        if($request->has('property_document')){
+        $documentPath = [];
+        if ($request->has('property_document')) {
 
-            foreach($request->file('property_document') as $key => $document){
-                $fileName = time().$key.$document->getClientOriginalName();
+            foreach ($request->file('property_document') as $key => $document) {
+                $fileName = time() . $key . $document->getClientOriginalName();
                 $document->move(public_path('/properties/propertyDocuments'), $fileName);
-                $filepath = env('APP_URL').'/properties/propertyDocuments/'.$fileName;
+                $filepath = env('APP_URL') . '/properties/propertyDocuments/' . $fileName;
                 $documentPath[$key] = $filepath;
             }
         }
@@ -31,12 +31,26 @@ class PropertyVerificationController extends Controller
         ]);
 
 
-        // $property = Property::find($id);
-        // $property->is_verified = true;
-        // $property->save();
+        $property = Property::find($id);
+        $property->is_verified = "Pending Verification";
+        $property->save();
 
         $data['status'] = 'Success';
         $data['message'] = 'Property Verification sent to Admin';
         return response()->json($data, 201);
+    }
+
+
+    // Admin property Verification
+    public function adminVerifyProperty(Request $request, $id)
+    {
+
+        $property = Property::find($id);
+        $property->is_verified = "Pending Verification";
+        $property->save();
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Property Verification Complete';
+        return response()->json($data, 200);
     }
 }

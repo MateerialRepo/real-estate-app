@@ -54,7 +54,7 @@ class TenantController extends Controller
     {
         try{
             
-            $tenant = Auth::tenant();
+            $tenant = Auth::user();
             $tenant->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -69,7 +69,7 @@ class TenantController extends Controller
                 'country' => $request->country
                 ]);
 
-            $tenant = Auth::tenant()->load('tenantNextOfKin', 'tenantReferee');
+            $tenant = Auth::user();
 
             $data['status'] = 'Success';
             $data['message'] = 'tenant Profile Update Successful';
@@ -86,7 +86,7 @@ class TenantController extends Controller
     }
 
 
-    public function updatepassword(Request $request){
+    public function updatePassword(Request $request){
         try{
 
             $validator = Validator::make($request->all(), [
@@ -99,7 +99,7 @@ class TenantController extends Controller
             }
 
 
-            $tenant = Auth::tenant();
+            $tenant = Auth::user();
 
             if (!Hash::check($request->current_password, $tenant->password)) {
                 return response()->json(['error'=>'Current password does not match!'], 401);
@@ -122,7 +122,7 @@ class TenantController extends Controller
     }
 
 
-    public function updatetenantKYC(Request $request){
+    public function updateTenantKYC(Request $request){
 
         try{
 
@@ -136,16 +136,16 @@ class TenantController extends Controller
             
             $idVerification = time().'.'.$request->kyc_img->extension();
 
-            $tenant = Auth::tenant();
+            $tenant = Auth::user();
             $tenant->update([
-                'KYC_status' => "completed",
-                'KYC_type' => "NIN",
-                'KYC_id' => "/tenants/tenantkyc/".$idVerification
+                'is_approved' => true,
+                'kyc_type' => "NIN",
+                'kyc_id' => env('APP_URL')."/tenants/tenantkyc/".$idVerification
                 ]);
             
             $request->kyc_img->move(public_path('/tenants/tenantkyc'), $idVerification);
 
-            $tenant = Auth::tenant()->load('tenantNextOfKin', 'tenantReferee');            
+            $tenant = Auth::user();            
             $data['status'] = 'Success';
             $data['message'] = 'KYC Image Successfully Uploaded';
             $data['data'] = $tenant;
@@ -159,7 +159,7 @@ class TenantController extends Controller
 
     }
 
-    public function uploadprofilepic(Request $request){
+    public function uploadProfilePic(Request $request){
 
         try{
 
@@ -173,14 +173,14 @@ class TenantController extends Controller
             
             $profilepic = time().'.'.$request->profile_pic->extension();
 
-            $tenant = Auth::tenant();
+            $tenant = Auth::user();
             $tenant->update([
-                'profile_pic' => "/tenants/tenantprofilepic/".$profilepic
+                'profile_pic' => env('APP_URL')."/tenants/tenantprofilepic/".$profilepic
                 ]);
 
             $request->profile_pic->move(public_path('/tenants/tenantprofilepic'), $profilepic);
 
-            $tenant = Auth::tenant()->load('tenantNextOfKin', 'tenantReferee');            
+            $tenant = Auth::user();            
             $data['status'] = 'Success';
             $data['message'] = 'Profile Pic Uploaded Successfully';
             $data['data'] = $tenant;

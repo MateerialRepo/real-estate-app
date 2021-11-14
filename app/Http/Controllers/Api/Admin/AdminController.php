@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Models\Tenant;
 use App\Models\Landlord;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -53,7 +54,7 @@ class AdminController extends Controller
         $data['message'] = 'Landlord retrieved successfully';
         $data['data'] = $landlord->find($id);
         return response()->json($data, 200);
-    }   
+    }
 
 
     public function destroyLandlord(Landlord $landlord, $id)
@@ -61,5 +62,29 @@ class AdminController extends Controller
         $landlord->delete();
 
         return response()->json(['message' => 'Landlord deleted successfully']);
+    }
+
+    // Handling properties activities and functions
+    public function allProperties()
+    {
+        $data['status'] = 'Success';
+        $data['message'] = 'Properties retrieved successfully';
+        $data['data'] = Property::all();
+        return response()->json($data, 200);
+    }
+
+    public function singleProperty(Property $property, $id)
+    {
+        $data['status'] = 'Success';
+        $data['message'] = 'Property retrieved successfully';
+        $data['data'] = $property->find($id);
+        return response()->json($data, 200);
+    }
+
+    public function destroyProperty(Property $property, $id)
+    {
+        $property->delete();
+
+        return response()->json(['message' => 'Property deleted successfully']);
     }
 }
