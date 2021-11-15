@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Admin;
+
 return [
 
     /*
@@ -89,10 +91,15 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Tenant::class,
         ],
-        
+
         'landlords' => [
             'driver' => 'eloquent',
             'model' => App\Models\Landlord::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
