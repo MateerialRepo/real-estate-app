@@ -23,11 +23,13 @@ class Document extends Model
 
 
 
-    // public function tenant(){
-    //     return $this->hasOne(Tenant::class);
-    // }
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class);
+    }
 
-    // public function landlord(){
-    //     return $this->hasOne(Landlord::class);
-    // }
+    public function landlord()
+    {
+        return $this->hasOne(Landlord::class);
+    }
 }

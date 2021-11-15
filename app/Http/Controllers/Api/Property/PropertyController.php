@@ -103,10 +103,10 @@ class PropertyController extends Controller
                 $property_data['property_images'] = $imageslink;
                 $property_data['property_amenities'] = $request->property_amenities;
 
-                Property::where('property_unique_id', $unique_id)->update($property_data);
+                $property = Property::where('property_unique_id', $unique_id)->update($property_data);
                 $data['status'] = 'Success';
                 $data['message'] = 'Property Successfully Updated';
-                $data['data'] = Property::where('property_unique_id', $unique_id)->get();
+                $data['data'] = $property;
                 return response()->json($data, 200);
             } else {
 

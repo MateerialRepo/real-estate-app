@@ -40,19 +40,27 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
         Route::middleware('auth:tenant')->group(function () {
             Route::get('/', [TenantController::class, 'show']);
-            Route::post('/kyc-update', [TenantController::class, 'updateTenantKYC']); //test
-            Route::post('/password-update', [TenantController::class, 'updatePassword']); //create and test
-            Route::post('/update-profile', [TenantController::class, 'update']); //test
-            Route::post('/upload-pic', [TenantController::class, 'uploadProfilePic']); //create and test
+            Route::post('/kyc-update', [TenantController::class, 'updateTenantKYC']);
+            Route::post('/password-update', [TenantController::class, 'updatePassword']);
+            Route::post('/update-profile', [TenantController::class, 'update']);
+            Route::post('/upload-pic', [TenantController::class, 'uploadProfilePic']);
             Route::post('/add-update/referee', RefereeController::class);
             Route::post('/add-update/next-of-kin', NextOfKinController::class);
+
             // ticket routes
             Route::get('/ticket', [TicketController::class, 'fetchAll']);
-            Route::get('/ticket/{$unique_id}', [TicketController::class, 'fetchSingle']);
+            Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle']);
             Route::post('/ticket', [TicketController::class, 'createTicket']);
-            Route::post('/ticket/{$unique_id}/resolve', [TicketController::class, 'resolveTicket']);
-            Route::post('/ticket/{$unique_id}/reopen', [TicketController::class, 'reopenTicket']);
-            Route::delete('/ticket/{$unique_id}', [TicketController::class, 'deleteTicket']);
+            Route::post('/ticket/{unique_id}/resolve', [TicketController::class, 'resolveTicket']);
+            Route::post('/ticket/{unique_id}/reopen', [TicketController::class, 'reopenTicket']);
+            Route::delete('/ticket/{unique_id}', [TicketController::class, 'deleteTicket']);
+
+            // Document routes
+            Route::get('/document', [DocumentController::class, 'fetchAllTenantDocument']);
+            Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
+            Route::post('/document', [DocumentController::class, 'createDocument']);
+            Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
+            Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
 
             Route::post('/logout', [AuthController::class, 'logout']);
