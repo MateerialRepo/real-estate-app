@@ -9,7 +9,7 @@ class Property extends Model
 {
     use HasFactory;
 
-    protected $with = ['propertyVerificatiion'];
+    protected $with = ['propertyVerification'];
 
     // Allow any field to be inserted
     protected $guarded = [];
