@@ -23,8 +23,8 @@ class PropertyVerification extends Model
     ];
 
 
-    // public function property()
-    // {
-    //     return $this->belongsTo('App\Models\Property');
-    // }
+    public function property()
+    {
+        return $this->belongsTo('App\Models\Property');
+    }
 }
