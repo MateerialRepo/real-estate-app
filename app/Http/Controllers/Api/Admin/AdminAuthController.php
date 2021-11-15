@@ -51,10 +51,20 @@ class AdminAuthController extends Controller
 
     public function logout(Request $request)
     {
-        $admin = Auth::user()->token();
-        $admin->revoke();
-        $data['status'] = 'Success';
-        $data['message'] = 'Successfully logged out';
-        return response()->json($data, 200);
+        try {
+
+            $admin = Auth::guard('admin')->user()->token();
+            $admin->revoke();
+            $data['status'] = 'Success';
+            $data['message'] = 'Successfully logged out';
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'success' => false,
+                'error_type' => 'error',
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }
