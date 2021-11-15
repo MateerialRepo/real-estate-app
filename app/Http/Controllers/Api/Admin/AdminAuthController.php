@@ -12,10 +12,8 @@ class AdminAuthController extends Controller
 {
     public function login(Request $request)
     {
-        try{
-
+        try {
             $admin = Admin::where('email', request()->email)->first();
-
             if (!$admin) {
                 return response()->json([
                     'success' => false,
@@ -41,7 +39,7 @@ class AdminAuthController extends Controller
                 'token' => $token->accessToken,
                 'user' => $admin
             ], 200);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'error_type' => 'error',
@@ -51,11 +49,12 @@ class AdminAuthController extends Controller
     }
 
 
-    public function logout(Request $request){
-        $admin = Auth::guard('admin')->user()->token();
+    public function logout(Request $request)
+    {
+        $admin = Auth::user()->token();
         $admin->revoke();
         $data['status'] = 'Success';
-        $data['message']= 'Successfully logged out';
+        $data['message'] = 'Successfully logged out';
         return response()->json($data, 200);
     }
 }

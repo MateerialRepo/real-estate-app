@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Referee;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
-    
+
 
     protected $fillable = [
         'first_name',
@@ -57,6 +56,4 @@ class Landlord extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-  
 }

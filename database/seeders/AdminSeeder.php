@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
@@ -16,8 +16,8 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'username' => Str::random(10),
+        Admin::create([
+            'username' => "Admin",
             'email' => 'admin@breics.com',
             'password' => Hash::make('password'),
         ]);
