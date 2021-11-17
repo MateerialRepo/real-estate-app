@@ -57,8 +57,9 @@ class AdminController extends Controller
     }
 
 
-    public function destroyLandlord(Landlord $landlord, $id)
+    public function destroyLandlord($id)
     {
+        $landlord = Landlord::find($id);
         $landlord->delete();
 
         return response()->json(['message' => 'Landlord deleted successfully']);

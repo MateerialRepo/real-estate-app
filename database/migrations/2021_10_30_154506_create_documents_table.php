@@ -24,6 +24,7 @@ class CreateDocumentsTable extends Migration
             $table->string('document_format');
             $table->text('description');
             $table->string('landlord_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

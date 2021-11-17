@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PropertyVerification extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = [];
 
@@ -15,10 +16,10 @@ class PropertyVerification extends Model
         'property_document' => 'array'
     ];
 
-    protected $fillable = [ 
-        'property_id', 
-        'document_type', 
-        'property_document', 
+    protected $fillable = [
+        'property_id',
+        'document_type',
+        'property_document',
         'description'
     ];
 

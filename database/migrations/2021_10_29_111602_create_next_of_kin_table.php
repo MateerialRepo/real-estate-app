@@ -26,6 +26,7 @@ class CreateNextOfKinTable extends Migration
                 ->references('id')
                 ->on('tenants')
                 ->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

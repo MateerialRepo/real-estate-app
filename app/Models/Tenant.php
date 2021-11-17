@@ -6,11 +6,12 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Tenant extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
     protected $with = ['referee', 'nextOfKin'];
 
@@ -56,11 +57,13 @@ class Tenant extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function referee(){
+    public function referee()
+    {
         return $this->hasOne(Referee::class);
     }
 
-    public function nextOfKin(){
+    public function nextOfKin()
+    {
         return $this->hasOne(NextOfKin::class);
     }
 }

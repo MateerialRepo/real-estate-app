@@ -19,6 +19,7 @@ class CreateTicketCommentsTable extends Migration
             $table->text('comment');
             $table->string('commenter_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

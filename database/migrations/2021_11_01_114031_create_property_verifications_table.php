@@ -20,6 +20,7 @@ class CreatePropertyVerificationsTable extends Migration
             $table->json('property_document');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

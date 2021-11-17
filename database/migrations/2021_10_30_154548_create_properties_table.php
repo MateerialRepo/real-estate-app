@@ -46,6 +46,7 @@ class CreatePropertiesTable extends Migration
             $table->string('is_available');
             $table->string('is_verified')->default('not verified');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

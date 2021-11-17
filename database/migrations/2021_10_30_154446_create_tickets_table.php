@@ -24,6 +24,7 @@ class CreateTicketsTable extends Migration
             $table->json('ticket_img')->nullable();
             $table->string('landlord_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
