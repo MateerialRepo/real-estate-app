@@ -15,6 +15,9 @@ class CreatePropertyReservationsTable extends Migration
     {
         Schema::create('property_reservations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained();
+            $table->foreignId('property_id')->constrained();
+            $table->boolean('isReserved');
             $table->timestamps();
         });
     }
