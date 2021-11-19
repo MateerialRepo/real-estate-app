@@ -10,7 +10,7 @@ class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['propertyVerification'];
+    protected $with = ['propertyVerification', 'document', 'propertyLike'];
 
     // Allow any field to be inserted
     protected $guarded = [];
@@ -70,5 +70,13 @@ class Property extends Model
     public function propertyVerification()
     {
         return $this->hasOne(PropertyVerification::class);
+    }
+
+    public function document(){
+        return $this->hasMany(Document::class);
+    }
+
+    public function propertyLike(){
+        return $this->hasMany(PropertyLike::class);
     }
 }

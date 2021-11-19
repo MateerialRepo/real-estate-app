@@ -18,7 +18,7 @@ class LandlordController extends Controller
     }
 
 
-    public function updatepassword(Request $request){
+    public function updatePassword(Request $request){
         try{
 
             $validator = Validator::make($request->all(), [
@@ -78,7 +78,7 @@ class LandlordController extends Controller
        }    
     }
 
-    public function uploadprofilepic(Request $request){
+    public function uploadProfilePic(Request $request){
 
         try{
 

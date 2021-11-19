@@ -11,19 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DocumentController extends Controller
 {
-    // fetch all documents
-    public function fetchAllTenantDocument()
-    {
-        $user = Auth::user();
-
-        $documents = Document::where('tenant_id', '=', $user->id)
-            ->orderBy('created_at', 'desc')->get();
-
-        $data['status'] = 'Success';
-        $data['message'] = 'Tickets Fetched Successfully';
-        $data['data'] = $documents;
-        return response()->json($data, 200);
-    }
+    // general routes for all users
 
     // fetch single document
     public function fetchSingleDocument($unique_id)
@@ -40,59 +28,6 @@ class DocumentController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Document Fetched Successfully';
-            $data['data'] = $document;
-            return response()->json($data, 200);
-        } catch (\Exception $exception) {
-
-            $data['status'] = 'Failed';
-            $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
-        }
-    }
-
-    //create document
-    public function createDocument(Request $request)
-    {
-        try {
-
-            $validator = Validator::make($request->all(), [
-                'document_file' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 401);
-            };
-
-            $unique_id = 'DOC-' . Str::random(7) . time() . '-BRC';
-
-            $user = Auth::user();
-
-            $document_unique_id = $unique_id;
-
-            $document_format = $request->document_file->extension();
-
-            $document = time() . rand(1000000, 9999999) . '.' . $document_format;
-
-            $documentURL = env('APP_URL') . '/tenants/documents/' . $document;
-
-            $request->document_file->move(public_path('/tenants/documents'), $document);
-
-
-            $document = Document::create(
-                [
-                    'tenant_id' => $user->id,
-                    'document_unique_id' => $document_unique_id,
-                    'document_category' => $request->document_category,
-                    'document_url' => $documentURL,
-                    'document_format' => $document_format,
-                    'description' => $request->description,
-                    'landlord_id' => $request->landlord_id
-                ]
-            );
-
-
-            $data['status'] = 'Success';
-            $data['message'] = 'Document Created Successfully';
             $data['data'] = $document;
             return response()->json($data, 200);
         } catch (\Exception $exception) {
@@ -134,10 +69,7 @@ class DocumentController extends Controller
                 $document_data['document_url'] =  $documentURL;
             }
 
-            $tenant = Auth::user();
-            $document_data['tenant_id'] = $tenant->id;
-            $document_data['document_unique_id'] = 'DOC-' . Str::random(7) . time() . '-BRC';
-
+            
             $document = Document::where('document_unique_id', $unique_id)->update($document_data);
 
             $data['status'] = 'Success';
@@ -179,7 +111,93 @@ class DocumentController extends Controller
         }
     }
 
+
+    // ***********************************Tenant Documents functions******************************************************
+    // fetch all documents
+    public function fetchAllTenantDocument()
+    {
+        $user = Auth::user();
+
+        $documents = Document::where('tenant_id', $user->id)
+            ->orderBy('created_at', 'desc')->get();
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Tickets Fetched Successfully';
+        $data['data'] = $documents;
+        return response()->json($data, 200);
+    }
+
+    //create document
+    public function createDocument(Request $request)
+    {
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'document_file' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 401);
+            };
+
+            $unique_id = 'DOC-' . Str::random(7) . time() . '-BRC';
+
+            $user = Auth::user();
+
+            $document_unique_id = $unique_id;
+
+            $document_format = $request->document_file->extension();
+
+            $document = time() . rand(1000000, 9999999) . '.' . $document_format;
+
+            $documentURL = env('APP_URL') . '/tenants/documents/' . $document;
+
+            $request->document_file->move(public_path('/tenants/documents'), $document);
+
+
+            $document = Document::create(
+                [
+                    'tenant_id' => $user->id,
+                    'property_id' => $request->property_id,
+                    'document_unique_id' => $document_unique_id,
+                    'document_category' => $request->document_category,
+                    'document_url' => $documentURL,
+                    'document_format' => $document_format,
+                    'description' => $request->description,
+                    'landlord_id' => $request->landlord_id
+                ]
+            );
+
+
+            $data['status'] = 'Success';
+            $data['message'] = 'Document Created Successfully';
+            $data['data'] = $document;
+            return response()->json($data, 200);
+        } catch (\Exception $exception) {
+
+            $data['status'] = 'Failed';
+            $data['message'] = $exception->getMessage();
+            return response()->json($data, 400);
+        }
+    }
+
+
+    
     // ***********************************Landlord Documents functions******************************************************
+    // fetch all landlord documents
+    public function fetchAllLandlordDocument()
+    {
+        $user = Auth::user();
+
+        $documents = Document::where('landlord_id', $user->id)
+            ->orderBy('created_at', 'desc')->get();
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Tickets Fetched Successfully';
+        $data['data'] = $documents;
+        return response()->json($data, 200);
+    }
+
     //create document
     public function createLandlordDocument(Request $request)
     {
@@ -210,13 +228,14 @@ class DocumentController extends Controller
 
             $document = Document::create(
                 [
-                    'tenant_id' => $user->id,
+                    'property_id' => $request->property_id,
+                    'tenant_id' => $request->tenant_id,
                     'document_unique_id' => $document_unique_id,
                     'document_category' => $request->document_category,
                     'document_url' => $documentURL,
                     'document_format' => $document_format,
                     'description' => $request->description,
-                    'landlord_id' => $request->landlord_id
+                    'landlord_id' => $user->id
                 ]
             );
 
@@ -232,4 +251,6 @@ class DocumentController extends Controller
             return response()->json($data, 400);
         }
     }
+
+
 }

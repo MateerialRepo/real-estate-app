@@ -62,4 +62,12 @@ class AuthController extends Controller
             ], 400);
         }
     }
+
+    public function logout(Request $request){
+        $landlord = Auth::guard('tenant')->user()->token();
+        $landlord->revoke();
+        $data['status'] = 'Success';
+        $data['message']= 'Successfully logged out';
+        return response()->json($data, 200);
+    }
 }

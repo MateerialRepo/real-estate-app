@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Api\Property\PropertyLikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Tenant\AuthController;
@@ -62,6 +63,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
+            // property routes
+            Route::post('/property/like/id', [PropertyLikeController::class, 'likeProperty']);
+
 
             Route::post('/logout', [AuthController::class, 'logout']);
         });
@@ -76,15 +80,22 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::middleware('auth:landlord')->group(function () {
             Route::get('/', [LandlordController::class, 'index']);
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']); //test
-            Route::post('/password-update', [LandlordController::class, 'updatepassword']); //create and test
+            Route::post('/password-update', [LandlordController::class, 'updatePassword']); //create and test
             Route::post('/update-profile', [LandlordController::class, 'updateLandlord']); //test
-            Route::post('/upload-pic', [LandlordController::class, 'uploadprofilepic']); //create and test
+            Route::post('/upload-pic', [LandlordController::class, 'uploadProfilePic']); //create and test
             Route::get('/property', [PropertyController::class, 'index']); //create and test
             Route::get('/property/{unique_id}', [PropertyController::class, 'getProperty']); //create and test
             Route::post('/save-property', [PropertyController::class, 'createProperty']); //done
             Route::post('/update-property/{unique_id}', [PropertyController::class, 'updateProperty']); //create and test
             Route::post('/verify-property/{id}', [PropertyVerificationController::class, 'verifyProperty']); //create and test
             Route::delete('/property/{unique_id}', [PropertyController::class, 'deleteProperty']); //create and test
+
+            // Document routes
+            Route::get('/document', [DocumentController::class, 'fetchAllLAndlordDocument']);
+            Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
+            Route::post('/document', [DocumentController::class, 'createLandlordDocument']);
+            Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
+            Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });

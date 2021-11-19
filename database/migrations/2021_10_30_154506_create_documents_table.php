@@ -16,14 +16,13 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('document_unique_id');
-            $table->foreignId('tenant_id')
-                ->constrained()
-                ->onDelete('cascade');
+            $table->string('property_id')->nullable();
+            $table->string('tenant_id')->nullable();
             $table->string('document_category');
             $table->string('document_url');
             $table->string('document_format');
             $table->text('description');
-            $table->string('landlord_id');
+            $table->string('landlord_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

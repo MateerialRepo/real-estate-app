@@ -14,6 +14,7 @@ class Document extends Model
 
     protected $fillable = [
         'tenant_id',
+        'property_id',
         'document_unique_id',
         'document_category',
         'document_url',
@@ -24,13 +25,8 @@ class Document extends Model
 
 
 
-    public function tenant()
+    public function property()
     {
-        return $this->hasOne(Tenant::class);
-    }
-
-    public function landlord()
-    {
-        return $this->hasOne(Landlord::class);
+        return $this->belongsTo(Property::class);
     }
 }
