@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Api\Property\PropertyLikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Tenant\AuthController;
@@ -13,6 +12,8 @@ use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
 use App\Http\Controllers\Api\Property\PropertyController;
 use App\Http\Controllers\Api\Landlord\LandlordAuthController;
+use App\Http\Controllers\Api\Property\PropertyLikeController;
+use App\Http\Controllers\Api\Property\PropertyReservationController;
 use App\Http\Controllers\Api\Property\PropertyVerificationController;
 
 /*
@@ -64,7 +65,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
             // property routes
-            Route::post('/property/like/id', [PropertyLikeController::class, 'likeProperty']);
+            Route::post('/property/like/{propertyId}', [PropertyLikeController::class, 'likeProperty']);
+            Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
+            Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
 
 
             Route::post('/logout', [AuthController::class, 'logout']);

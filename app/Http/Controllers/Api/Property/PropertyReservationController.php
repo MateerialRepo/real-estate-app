@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Property;
 
 use Illuminate\Http\Request;
 use App\Models\PropertyReservation;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class PropertyReservationController extends Controller
 {
     //reserve a property
-    public function reserveProperty(Request $request, $property_id)
+    public function reserveProperty($property_id)
     {
         $isPropertyReserved = PropertyReservation::where('property_id',$property_id)
         ->where('isReserved',true)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Api\Property;
+namespace App\Http\Controllers\Api\Property;
 
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class PropertyLikeController extends Controller
         $propertyLike->delete();
 
         $data['status'] = 'Success';
-        $data['message'] = 'Unliked Property Successfully';
+        $data['message'] = 'Property Unliked Successfully';
         return response()->json($data, 200);
     }
 }
