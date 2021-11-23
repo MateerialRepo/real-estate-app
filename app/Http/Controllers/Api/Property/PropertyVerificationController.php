@@ -46,7 +46,7 @@ class PropertyVerificationController extends Controller
     {
 
         $property = Property::find($id);
-        $property->is_verified = "Pending Verification";
+        $property->is_verified = "Verified";
         $property->save();
 
         $data['status'] = 'Success';
