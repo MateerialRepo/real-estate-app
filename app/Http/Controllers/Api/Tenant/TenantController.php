@@ -105,7 +105,7 @@ class TenantController extends Controller
                 return response()->json(['error'=>'Current password does not match!'], 401);
             }
 
-            $tenant->password = Hash::make($request->new_password);
+            $tenant->password = bcrypt($request->new_password);
             $tenant->save();
 
 
