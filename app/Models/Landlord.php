@@ -65,4 +65,8 @@ class Landlord extends Authenticatable
     public function propertyLike(){
         $this->hasManyThrough(PropertyLike::class, Property::class);
     }
+
+    public function propertyReservation(){
+        return $this->hasManyThrough(PropertyReservation::class, Property::class);
+    }
 }
