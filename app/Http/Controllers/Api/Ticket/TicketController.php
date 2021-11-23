@@ -170,7 +170,7 @@ class TicketController extends Controller
             Ticket::where('ticket_unique_id', $unique_id)->delete();
 
             $data['status'] = 'Success';
-            $data['message'] = 'Document Deleted Successfully';
+            $data['message'] = 'Ticket Deleted Successfully';
             return response()->json($data, 200);
         } catch (\Exception $exception) {
 
