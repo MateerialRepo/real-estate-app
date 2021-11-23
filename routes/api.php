@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Tenant\TenantController;
 use App\Http\Controllers\Api\Ticket\TicketController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Api\Landlord\LandlordController;
 use App\Http\Controllers\Api\Property\PropertyController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\Ticket\TicketCommentController;
-use App\Http\Controllers\Api\Landlord\LandlordAuthController;
 use App\Http\Controllers\Api\Property\PropertyLikeController;
 use App\Http\Controllers\Api\Property\PropertyReservationController;
 use App\Http\Controllers\Api\Property\PropertyVerificationController;
