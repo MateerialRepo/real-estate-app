@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PropertyLikeController extends Controller
 {
+    // ***********************Tenant  Property Engagement functions*****************************//
     //tenant like a property
     public function likeProperty(Request $request, $propertyId)
     {
@@ -37,4 +38,10 @@ class PropertyLikeController extends Controller
         $data['message'] = 'Property Unliked Successfully';
         return response()->json($data, 200);
     }
+
+
+
+    // ***********************Landlord  Property Engagement functions*****************************//
+    
+
 }

@@ -57,4 +57,12 @@ class Landlord extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function property(){
+        $this->hasMany(Property::class);
+    }
+
+    public function propertyLike(){
+        $this->hasManyThrough(PropertyLike::class, Property::class);
+    }
 }

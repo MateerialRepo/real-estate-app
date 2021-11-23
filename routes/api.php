@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Tenant\TenantController;
 use App\Http\Controllers\Api\Ticket\TicketController;
 use App\Http\Controllers\Api\Tenant\RefereeController;
 use App\Http\Controllers\Api\Admin\AdminAuthController;
+use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Tenant\NextOfKinController;
 use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
@@ -69,6 +70,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/property/like/{propertyId}', [PropertyLikeController::class, 'likeProperty']);
             Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
+
+            // payment routes
+            Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+
 
 
             Route::post('/logout', [AuthController::class, 'logout']);
