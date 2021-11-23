@@ -2,16 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\AdminController;
-use App\Http\Controllers\Api\Tenant\AuthController;
 use App\Http\Controllers\Api\Tenant\TenantController;
 use App\Http\Controllers\Api\Ticket\TicketController;
+use App\Http\Controllers\Api\Auth\AdminAuthController;
 use App\Http\Controllers\Api\Tenant\RefereeController;
-use App\Http\Controllers\Api\Admin\AdminAuthController;
 use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Tenant\NextOfKinController;
+use App\Http\Controllers\Api\Auth\LandlordAuthController;
 use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
 use App\Http\Controllers\Api\Property\PropertyController;
+use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Ticket\TicketCommentController;
 use App\Http\Controllers\Api\Landlord\LandlordAuthController;
 use App\Http\Controllers\Api\Property\PropertyLikeController;
 use App\Http\Controllers\Api\Property\PropertyReservationController;
@@ -40,6 +42,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::prefix('v1/tenant')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/password/forgot', [ForgotPasswordController::class, 'forgot']);//works for both landlord and tenant
+        Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);//works for both landlord and tenant
+
 
         Route::middleware('auth:tenant')->group(function () {
             Route::get('/', [TenantController::class, 'show']);
@@ -57,6 +62,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/ticket/{unique_id}/resolve', [TicketController::class, 'resolveTicket']);
             Route::post('/ticket/{unique_id}/reopen', [TicketController::class, 'reopenTicket']);
             Route::delete('/ticket/{unique_id}', [TicketController::class, 'deleteTicket']);
+            Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
+
+
 
             // Document routes
             Route::get('/document', [DocumentController::class, 'fetchAllTenantDocument']);
@@ -86,7 +94,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::prefix('v1/landlord')->group(function () {
         Route::post('/register', [LandlordAuthController::class, 'register']);
         Route::post('/login', [LandlordAuthController::class, 'login']);
-
+        Route::post('/password/forgot', [ForgotPasswordController::class, 'forgot']);//works for both landlord and tenant
+        Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);//works for both landlord and tenant
+    
         Route::middleware('auth:landlord')->group(function () {
             Route::get('/', [LandlordController::class, 'index']);
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']); //test

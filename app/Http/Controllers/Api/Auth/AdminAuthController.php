@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;

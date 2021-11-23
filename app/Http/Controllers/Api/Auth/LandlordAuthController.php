@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Landlord;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\Landlord;
 use Illuminate\Http\Request;

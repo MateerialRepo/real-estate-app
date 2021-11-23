@@ -159,6 +159,7 @@ class TicketController extends Controller
 
             // $user = Auth::user();
             $ticket = Ticket::where('ticket_unique_id', $unique_id)->get();
+            // dd($ticket);
 
             if (!$ticket) {
                 $data['status'] = 'Failed';
@@ -166,7 +167,7 @@ class TicketController extends Controller
                 return response()->json($data, 404);
             };
 
-            $ticket->delete();
+            Ticket::where('ticket_unique_id', $unique_id)->delete();
 
             $data['status'] = 'Success';
             $data['message'] = 'Document Deleted Successfully';
