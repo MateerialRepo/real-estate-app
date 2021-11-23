@@ -97,13 +97,13 @@ class TenantController extends Controller
             if ($validator->fails()) {
                 return response()->json(['error'=>$validator->errors()], 401);
             }
-
-
+        
             $tenant = Auth::user();
 
             if (!Hash::check($request->current_password, $tenant->password)) {
                 return response()->json(['error'=>'Current password does not match!'], 401);
             }
+
 
             $tenant->password = bcrypt($request->new_password);
             $tenant->save();
@@ -114,6 +114,7 @@ class TenantController extends Controller
             return response()->json($data, 200);
 
         }catch(\Exception $exception){
+
             $data['status'] = 'Failed';
             $data['message'] = $exception->getMessage();
             return response()->json($data, 400);

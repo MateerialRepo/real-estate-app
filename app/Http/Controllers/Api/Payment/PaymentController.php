@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Payment;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Unicodeveloper\Paystack\Facades\Paystack;
@@ -42,6 +43,15 @@ class PaymentController extends Controller
     // Get users transactions
     public function getTransactions(){
         $user = Auth::user();
-        
+
+        $transactions = Transaction::where('tenant_id', $user->id)->get();
+
+        $data['status'] = "Success";
+        $data['message'] = "Fetched all Tenant's transactions";
+        $data['data'] = $transactions;
+
+        return response()->json($data, 200);
+
+    
     }
 }

@@ -73,6 +73,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             // payment routes
             Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+            Route::get('/transactions', [PaymentController::class, 'fetchTenantTransactions']);
 
 
 
