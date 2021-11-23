@@ -32,6 +32,15 @@ class PropertyController extends Controller
         return response()->json($data, 200);
     }
 
+    // fetch verified properties
+    public function fetchVerifiedProperties(){
+        $properties = Property::where('is_verified', 'verified')->get();
+        $data['status'] = 'Success';
+        $data['message'] = 'Fetched properties Successfully';
+        $data['properties'] = $properties;
+        return response()->json($data, 200);
+    }
+
 
     //save property
     public function createProperty(CreatePropertyRequest $request)

@@ -65,6 +65,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
             // property routes
+            Route::get('/properties', [PropertyController::class, 'fetchVerifiedProperties']); //test this
             Route::post('/property/like/{propertyId}', [PropertyLikeController::class, 'likeProperty']);
             Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
