@@ -16,13 +16,13 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('document_unique_id');
-            $table->string('property_id')->nullable();
-            $table->string('tenant_id')->nullable();
+            $table->integer('property_id')->nullable();
+            $table->integer('tenant_id')->nullable();
             $table->string('document_category');
             $table->string('document_url');
             $table->string('document_format');
             $table->text('description');
-            $table->string('landlord_id')->nullable();
+            $table->integer('landlord_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
