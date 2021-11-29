@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Models\Admin;
 use App\Models\Tenant;
 use App\Models\Landlord;
 use App\Models\Property;
@@ -11,6 +12,58 @@ use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
+    public function index()
+    {
+        $admins = Admin::all();
+        return response()->json($admins);
+    }
+
+    public function show($id)
+    {
+        $admin = Admin::find($id);
+        return response()->json($admin);
+    }
+
+    // Create admin users with role
+    public function createAdminUser(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:admins',
+            'password' => 'required|string|min:6',
+            'role' => 'required|string|max:255',
+        ]);
+
+        $admin = new Admin();
+        $admin->username = $request->username;
+        $admin->email = $request->email;
+        $admin->password = bcrypt($request->password);
+        $admin->role = $request->role;
+        $admin->save();
+
+        return response()->json([
+            'message' => 'Admin user created successfully',
+            'admin' => $admin
+        ], 201);
+    }
+
+
+    public function deleteAdminUser($id)
+    {
+        $admin = Admin::find($id);
+
+        if (!$admin) {
+            return response()->json([
+                'message' => 'Admin user not found'
+            ], 404);
+        }
+
+        $admin->delete();
+        return response()->json([
+            'message' => 'Admin user deleted successfully'
+        ], 200);
+    }   
+
     // Handling tenants activities
     public function allTenants()
     {

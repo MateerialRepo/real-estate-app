@@ -127,7 +127,11 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::post('/login', [AdminAuthController::class, 'login']);
 
         Route::middleware('auth:admin')->group(function () {
+            // access control
             Route::get('/', [AdminController::class, 'index']);
+            Route::get('/{id}', [AdminController::class, 'show']);
+            Route::post('/', [AdminController::class, 'createAdminUser']);
+            Route::delete('/{id}', [AdminController::class, 'deleteAdminUser']);
 
             // Tenant activities
             Route::get('/tenant', [AdminController::class, 'allTenants']);
