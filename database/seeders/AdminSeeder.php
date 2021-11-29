@@ -20,6 +20,7 @@ class AdminSeeder extends Seeder
             'username' => "Admin",
             'email' => 'admin@breics.com',
             'password' => Hash::make('password'),
+            'role'=>'Super Admin'
         ]);
     }
 }
