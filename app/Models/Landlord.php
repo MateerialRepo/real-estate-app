@@ -15,6 +15,8 @@ class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
+    protected $with = ['property', 'propertyLike', 'propertyReservation','transaction','document'];
+
 
     protected $fillable = [
         'first_name',
@@ -68,5 +70,13 @@ class Landlord extends Authenticatable
 
     public function propertyReservation(){
         return $this->hasManyThrough(PropertyReservation::class, Property::class);
+    }
+
+    public function transaction(){
+        return $this->hasManyThrough(Transaction::class, Property::class);
+    }
+
+    public function document(){
+        return $this->hasMany(Document::class);
     }
 }

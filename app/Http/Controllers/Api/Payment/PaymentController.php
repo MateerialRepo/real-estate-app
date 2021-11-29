@@ -33,7 +33,22 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-        dd($paymentDetails);
+        // dd($paymentDetails);
+
+        // save the data in the transaction table
+        $transaction = new Transaction();
+        $transaction->tenant_id = Auth::user()->id;
+        $transaction->property_id = $paymentDetails['data']['metadata']['property_id'];
+        $transaction->amount = $paymentDetails['data']['amount']/100;
+        $transaction->description = $paymentDetails['data']['reference'];
+        $transaction->status = $paymentDetails['data']['status'];
+        $transaction->save();
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Payment successful';
+        $data['data'] = $paymentDetails['data'];
+        return response()->json($data, 200);
+
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want

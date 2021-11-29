@@ -13,7 +13,7 @@ class Tenant extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $with = ['referee', 'nextOfKin'];
+    protected $with = ['referee', 'nextOfKin', 'property', 'propertyLike', 'propertyReservation','transaction','document'];
 
     protected $fillable = [
         'first_name',
@@ -71,4 +71,26 @@ class Tenant extends Authenticatable
     {
         return $this->belongsTo(Property::class);
     }
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function propertyLike()
+    {
+        return $this->hasMany(PropertyLike::class,);
+    }
+
+    public function propertyReservation()
+    {
+        return $this->hasMany(PropertyReservation::class);
+    }
+
+    public function document()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    
 }

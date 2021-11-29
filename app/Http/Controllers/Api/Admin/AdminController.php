@@ -6,6 +6,7 @@ use App\Models\Tenant;
 use App\Models\Landlord;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Models\PropertyReservation;
 use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
@@ -87,5 +88,13 @@ class AdminController extends Controller
         $property->delete();
 
         return response()->json(['message' => 'Property deleted successfully']);
+    }
+
+    public function allReservations()
+    {
+        $data['status'] = 'Success';
+        $data['message'] = 'Reservations retrieved successfully';
+        $data['data'] = PropertyReservation::all()->orderBy('created_at', 'desc');
+        return response()->json($data, 200);
     }
 }

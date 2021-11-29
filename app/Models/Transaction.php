@@ -13,7 +13,8 @@ class Transaction extends Model
         'tenant_id',
         'property_id',
         'amount',
-        'description'
+        'description',
+        'status'
     ];
 
     

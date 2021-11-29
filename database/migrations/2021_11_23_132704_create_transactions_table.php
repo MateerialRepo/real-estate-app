@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('property_id')->constrained();
             $table->string('amount');
             $table->string('description');
+            $table->string('status');
             $table->timestamps();
         });
     }

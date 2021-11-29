@@ -81,7 +81,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             // payment routes
             Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
-            Route::get('/transactions', [PaymentController::class, 'fetchTenantTransactions']);
+            Route::get('/transactions', [PaymentController::class, 'getTransactions']);
 
 
 
@@ -142,6 +142,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             // Property activities                                              
             Route::get('/property', [AdminController::class, 'allProperties']);
             Route::get('/property/{id}', [AdminController::class, 'singleProperty']);
+            Route::get('property/reservation', [AdminController::class, 'allReservations']);
             Route::delete('/property/{id}', [AdminController::class, 'destroyProperty']);
             Route::post('/property/{id}/verify', [PropertyVerificationController::class, 'adminVerifyProperty']);
 
