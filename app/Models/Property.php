@@ -77,11 +77,11 @@ class Property extends Model
     }
 
     public function propertyLike(){
-        return $this->hasMany(PropertyLike::class, Property::class);
+        return $this->hasMany(PropertyLike::class);
     }
 
     public function propertyReservation(){
-        return $this->hasMany(PropertyReservation::class, Property::class);
+        return $this->hasMany(PropertyReservation::class);
     }
 
     public function transaction(){
