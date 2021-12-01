@@ -7,15 +7,15 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
+    // test that two strings matches
+    public function test_that_strings_match(){
+        $string1 = 'test';
+        $string2 = 'test';
 
-        $response->assertStatus(200);
+        $string3 = 'Testing';
+
+        $this->assertSame($string1, $string2);
+
+        $this->assertSame($string1, $string3);
     }
 }

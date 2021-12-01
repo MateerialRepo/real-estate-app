@@ -9,6 +9,7 @@ use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Models\PropertyReservation;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateAdminRequest;
 
 class AdminController extends Controller
 {
@@ -25,21 +26,14 @@ class AdminController extends Controller
     }
 
     // Create admin users with role
-    public function createAdminUser(Request $request)
+    public function createAdminUser(CreateAdminRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'password' => 'required|string|min:6',
-            'role' => 'required|string|max:255',
+        $admin = Admin::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
-
-        $admin = new Admin();
-        $admin->username = $request->username;
-        $admin->email = $request->email;
-        $admin->password = bcrypt($request->password);
-        $admin->role = $request->role;
-        $admin->save();
 
         return response()->json([
             'message' => 'Admin user created successfully',
