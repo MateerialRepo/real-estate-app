@@ -26,41 +26,44 @@ class ForgotPasswordController extends Controller
         $email = $request->input('email');
 
         // check if $email exists in Tenant or landlord models
-        $tenant_exists = Tenant::where('email', $email)->doesntExist();
-        $landlord_exists = Landlord::where('email', $email)->doesntExist();
+        $tenant_DoesntExists = Tenant::where('email', $email)->doesntExist();
+        $landlord_DoesntExists = Landlord::where('email', $email)->doesntExist();
 
-        if($tenant_exists || $landlord_exists){
+        if ($tenant_DoesntExists && $landlord_DoesntExists) {
             return response()->json(['message' => 'Email not found'], 404);
+        } else {
+
+            $token = Str::random(20);
+
+            try {
+
+                DB::table('password_resets')->where('email', $email)->delete();
+
+                DB::table('password_resets')->insert([
+                    'email' => $email,
+                    'token' => $token,
+                ]);
+
+                //send email
+                Mail::send('Mails.forgot', ['token' => $token], function (Message $message) use($email) {
+                    $message->to($email);
+                    $message->subject('Password Reset');
+                });
+
+                return response()->json([
+                    'message' => 'Email Successfully Sent, Please check your email'
+                ], 200);
+
+            } catch (\Exception $exception) {
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $exception->getMessage()
+                ], 400);
+            }
         }
 
-        $token = Str::random(20);
-
-        try {
-
-            DB::table('password_resets')->where('email', $email)->delete();
-
-            DB::table('password_resets')->insert([
-                'email' => $email,
-                'token' => $token,
-            ]);
-
-            //send email
-            Mail::send('Mails.forgot', ['token' => $token], function (Message $message) use($email) {
-                $message->to($email);
-                $message->subject('Password Reset');
-            });
-
-            return response()->json([
-                'message' => 'Email Successfully Sent, Please check your email'
-            ], 200);
-
-        } catch (\Exception $exception) {
-
-            return response()->json([
-                'status' => 'error',
-                'message' => $exception->getMessage()
-            ], 400);
-        }
+        
         
     }
 
