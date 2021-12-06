@@ -106,7 +106,7 @@ class AdminController extends Controller
 
 
     //*********************************Handling Landlord activities/functions******************************************//
-    public function allLandlords(Landlord $landlord)
+    public function allLandlords()
     {
         try {
 

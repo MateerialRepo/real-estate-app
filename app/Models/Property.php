@@ -55,8 +55,6 @@ class Property extends Model
     ];
 
 
-
-
     public function tenant()
     {
         return $this->hasOne(Tenant::class);

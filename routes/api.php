@@ -47,6 +47,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
         // fetch verified properties for user display
         Route::get('/property', [PropertyController::class, 'fetchVerifiedProperties']);
+        //fetch single property
+        
 
 
 
