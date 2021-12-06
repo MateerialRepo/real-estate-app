@@ -107,7 +107,7 @@ class TicketController extends Controller
         }
     }
 
-    // Fetch all tickets
+    // Fetch all tickets for tenant
     public function fetchAll()
     {
         try {
@@ -133,8 +133,7 @@ class TicketController extends Controller
     public function fetchSingle($unique_id)
     {
         try {
-            // $user = Auth::user();
-            // $tenant = Auth::guard('tenant')->user();
+            
             $ticket = Ticket::where('ticket_unique_id', $unique_id)->get();
 
             if (!$ticket) {
@@ -179,4 +178,30 @@ class TicketController extends Controller
             return response()->json($data, 400);
         }
     }
+
+
+    //*********************************************LANDLORD TICKET FUNCTIONALITIES ************************************//
+
+    public function fetchAllLandlord()
+    {
+        try {
+
+            $landlord = Auth::guard('landlord')->user();
+            $tickets = Ticket::where('landlord_id', $landlord->id)
+                ->orderBy('created_at', 'desc')->get();
+
+            $data['status'] = 'Success';
+            $data['message'] = 'Tickets Fetched Successfully';
+            $data['data'] = $tickets;
+            return response()->json($data, 200);
+        } catch (\Exception $exception) {
+
+            $data['status'] = 'Failed';
+            $data['message'] = $exception->getMessage();
+            return response()->json($data, 400);
+        }
+    }
+
+    
+
 }

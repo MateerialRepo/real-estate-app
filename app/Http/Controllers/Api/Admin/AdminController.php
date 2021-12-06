@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Models\Admin;
 use App\Models\Tenant;
+use App\Models\Ticket;
 use App\Models\Landlord;
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class AdminController extends Controller
         return response()->json($admin);
     }
 
-    // Create admin users with role
+    //*********************************Create admin users with role*************************************************//
+
     public function createAdminUser(CreateAdminRequest $request)
     {
         $admin = Admin::create([
@@ -58,7 +60,7 @@ class AdminController extends Controller
         ], 200);
     }   
 
-    // Handling tenants activities
+    //*********************************Handling tenants activities*************************************************/ 
     public function allTenants()
     {
         try{
@@ -103,8 +105,7 @@ class AdminController extends Controller
 
 
 
-
-    // Handling Landlord activities/functions
+    //*********************************Handling Landlord activities/functions******************************************//
     public function allLandlords(Landlord $landlord)
     {
         try {
@@ -147,7 +148,11 @@ class AdminController extends Controller
         return response()->json(['message' => 'Landlord deleted successfully']);
     }
 
-    // Handling properties activities and functions
+
+
+
+    //*********************************Handling properties activities and functions************************************//
+
     public function allProperties()
     {
         try{
@@ -188,4 +193,47 @@ class AdminController extends Controller
         $data['data'] = PropertyReservation::all()->orderBy('created_at', 'desc');
         return response()->json($data, 200);
     }
+
+
+    //*********************************Handling ticket activities and functions************************************//
+
+    public function allTickets()
+    {
+        $data['status'] = 'Success';
+        $data['message'] = 'Tickets retrieved successfully';
+        $data['data'] = Ticket::all()->orderBy('created_at', 'desc');
+        return response()->json($data, 200);
+    }
+
+
+    public function singleTicket(Ticket $ticket, $id)
+    {
+        $data['status'] = 'Success';
+        $data['message'] = 'Ticket retrieved successfully';
+        $data['data'] = $ticket->find($id);
+        return response()->json($data, 200);
+    }
+
+    //comment on ticket
+    public function commentOnTicket(Ticket $ticket, $id, Request $request)
+    {
+        $ticket = $ticket->find($id);
+        $ticket->comments()->create([
+            'comment' => $request->comment,
+            'user_id' => $request->user_id,
+        ]);
+
+        return response()->json(['message' => 'Comment added successfully']);
+    }
+
+    //assign ticket to user
+    public function assignTicket(Ticket $ticket, $id, Request $request)
+    {
+        $ticket = $ticket->find($id);
+        $ticket->landlord_id = $request->user_id;
+        $ticket->save();
+
+        return response()->json(['message' => 'Ticket assigned successfully']);
+    }
+
 }

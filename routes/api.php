@@ -120,6 +120,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
+            // ticket routes
+            Route::get('/ticket', [TicketController::class, 'fetchLandlordTickets']);
+            Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle']);
+            Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
+
+
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });
     });
