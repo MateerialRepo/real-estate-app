@@ -16,7 +16,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::all();
+        $admins = Admin::all()->orderBy('created_at', 'desc')->get();
         return response()->json($admins);
     }
 
@@ -67,7 +67,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Tenants retrieved successfully';
-            $data['data'] = Tenant::all();
+            $data['data'] = Tenant::all()->orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -112,7 +112,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Landlords retrieved successfully';
-            $data['data'] = Landlord::all();
+            $data['data'] = Landlord::all()->orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -158,7 +158,7 @@ class AdminController extends Controller
         try{
             $data['status'] = 'Success';
             $data['message'] = 'Properties retrieved successfully';
-            $data['data'] = Property::all();
+            $data['data'] = Property::all()->orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
