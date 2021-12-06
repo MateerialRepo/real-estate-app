@@ -73,7 +73,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             // Document routes
             Route::get('/document', [DocumentController::class, 'fetchAllTenantDocument']);
             Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
-            Route::post('/document', [DocumentController::class, 'createDocument']);
+            Route::post('/document', [DocumentController::class, 'createTenantDocument']);
             Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
@@ -158,6 +158,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('property/reservation', [AdminController::class, 'allReservations']);
             Route::delete('/property/{id}', [AdminController::class, 'destroyProperty']);
             Route::post('/property/{id}/verify', [PropertyVerificationController::class, 'adminVerifyProperty']);
+
+            // Document activities
+            Route::get('/document', [DocumentController::class, 'fetchAllDocument']);
+            Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
+            Route::post('/document', [DocumentController::class, 'createDocument']);
+            Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
 
             Route::post('/logout', [AdminAuthController::class, 'logout']);
