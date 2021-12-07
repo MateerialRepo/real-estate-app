@@ -16,48 +16,84 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::all()->orderBy('created_at', 'desc')->get();
-        return response()->json($admins);
+        try{
+
+            $admins = Admin::all()->orderBy('created_at', 'desc')->get();
+            return response()->json($admins);
+
+        } catch (\Exception $e) {
+
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+        
     }
 
     public function show($id)
     {
-        $admin = Admin::find($id);
-        return response()->json($admin);
+        try{
+                
+                $admin = Admin::find($id);
+                return response()->json($admin);
+    
+            } catch (\Exception $e) {
+    
+                $data['status'] = 'Failed';
+                $data['error'] = $e->getMessage();
+                return response()->json($data, 500);
+        }
+    
     }
 
     //*********************************Create admin users with role*************************************************//
 
     public function createAdminUser(CreateAdminRequest $request)
     {
-        $admin = Admin::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role,
-        ]);
-
-        return response()->json([
-            'message' => 'Admin user created successfully',
-            'admin' => $admin
-        ], 201);
+        try{
+            $admin = Admin::create([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'role' => $request->role,
+            ]);
+    
+            return response()->json([
+                'message' => 'Admin user created successfully',
+                'admin' => $admin
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Admin user creation failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+        
     }
 
 
     public function deleteAdminUser($id)
     {
-        $admin = Admin::find($id);
+        try{
+            $admin = Admin::find($id);
 
-        if (!$admin) {
+            if (!$admin) {
+                return response()->json([
+                    'message' => 'Admin user not found'
+                ], 404);
+            }
+    
+            $admin->delete();
             return response()->json([
-                'message' => 'Admin user not found'
-            ], 404);
+                'message' => 'Admin user deleted successfully'
+            ], 200);
         }
-
-        $admin->delete();
-        return response()->json([
-            'message' => 'Admin user deleted successfully'
-        ], 200);
+        catch(\Exception $e){
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+        
     }   
 
     //*********************************Handling tenants activities*************************************************/ 
@@ -72,7 +108,9 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'No Tenants not found'], 404);
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
 
         }
         
@@ -89,7 +127,9 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'No Tenant not found'], 404);
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
 
         }
         
@@ -117,7 +157,9 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'No Landlords not found'], 404);
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
 
         }
     }
@@ -134,7 +176,9 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'Landlord not found'], 404);
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
 
         }
     }
@@ -163,7 +207,9 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'No Properties not found'], 404);
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
 
         }
         
@@ -171,10 +217,19 @@ class AdminController extends Controller
 
     public function singleProperty(Property $property, $id)
     {
-        $data['status'] = 'Success';
-        $data['message'] = 'Property retrieved successfully';
-        $data['data'] = $property->find($id);
-        return response()->json($data, 200);
+        try{
+                $data['status'] = 'Success';
+                $data['message'] = 'Property retrieved successfully';
+                $data['data'] = $property->find($id);
+                return response()->json($data, 200);
+    
+        } catch (\Exception $e) {
+    
+                $data['status'] = 'Failed';
+                $data['error'] = $e->getMessage();
+                return response()->json($data, 500);
+        }
+        
     }
 
     
@@ -188,10 +243,21 @@ class AdminController extends Controller
 
     public function allReservations()
     {
-        $data['status'] = 'Success';
-        $data['message'] = 'Reservations retrieved successfully';
-        $data['data'] = PropertyReservation::all()->orderBy('created_at', 'desc');
-        return response()->json($data, 200);
+        try{
+
+            $data['status'] = 'Success';
+            $data['message'] = 'Reservations retrieved successfully';
+            $data['data'] = PropertyReservation::all()->orderBy('created_at', 'desc');
+            return response()->json($data, 200);
+
+        } catch (\Exception $e) {
+
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+
+        }
+        
     }
 
 
@@ -199,41 +265,81 @@ class AdminController extends Controller
 
     public function allTickets()
     {
-        $data['status'] = 'Success';
-        $data['message'] = 'Tickets retrieved successfully';
-        $data['data'] = Ticket::all()->orderBy('created_at', 'desc');
-        return response()->json($data, 200);
+        try{
+
+            $data['status'] = 'Success';
+            $data['message'] = 'Tickets retrieved successfully';
+            $data['data'] = Ticket::all()->orderBy('created_at', 'desc')->get();
+            return response()->json($data, 200);
+
+        } catch (\Exception $e) {
+
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+
+        }
+      
     }
 
 
     public function singleTicket(Ticket $ticket, $id)
     {
-        $data['status'] = 'Success';
-        $data['message'] = 'Ticket retrieved successfully';
-        $data['data'] = $ticket->find($id);
-        return response()->json($data, 200);
+        try{
+                
+            $data['status'] = 'Success';
+            $data['message'] = 'Ticket retrieved successfully';
+            $data['data'] = $ticket->find($id);
+            return response()->json($data, 200);
+    
+        } catch (\Exception $e) {
+    
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+        
     }
 
     //comment on ticket
     public function commentOnTicket(Ticket $ticket, $id, Request $request)
     {
-        $ticket = $ticket->find($id);
-        $ticket->comments()->create([
-            'comment' => $request->comment,
-            'user_id' => $request->user_id,
-        ]);
+        try{
+            $ticket = $ticket->find($id);
+            $ticket->comments()->create([
+                'comment' => $request->comment,
+                'user_id' => $request->user_id,
+            ]);
 
-        return response()->json(['message' => 'Comment added successfully']);
+            return response()->json(['message' => 'Comment added successfully']);
+
+        } catch (\Exception $e) {
+
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+        
     }
 
     //assign ticket to user
     public function assignTicket(Ticket $ticket, $id, Request $request)
     {
-        $ticket = $ticket->find($id);
-        $ticket->landlord_id = $request->user_id;
-        $ticket->save();
+        try{
 
-        return response()->json(['message' => 'Ticket assigned successfully']);
+            $ticket = $ticket->find($id);
+            $ticket->landlord_id = $request->user_id;
+            $ticket->save();
+
+            return response()->json(['message' => 'Ticket assigned successfully']);
+
+        } catch (\Exception $e) {
+
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+        
     }
 
 }
