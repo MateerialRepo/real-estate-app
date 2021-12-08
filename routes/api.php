@@ -34,6 +34,7 @@ Route::get('/test', function () {
     return 'API is up+';
 });
 
+// Route::get('/property', [AdminController::class, 'allProperties']);
 
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
@@ -95,7 +96,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     });
 
 
-    // LAndlord Routes
+    // Landlord Routes
     Route::prefix('v1/landlord')->group(function () {
         Route::post('/register', [LandlordAuthController::class, 'register']);
         Route::post('/login', [LandlordAuthController::class, 'login']);

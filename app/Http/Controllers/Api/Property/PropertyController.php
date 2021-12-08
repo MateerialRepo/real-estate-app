@@ -82,7 +82,7 @@ class PropertyController extends Controller
 
             $data['status'] = 'Failed';
             $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
+            return response()->json($data, 500);
         }
     }
 
@@ -134,7 +134,7 @@ class PropertyController extends Controller
 
             $data['status'] = 'Failed';
             $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
+            return response()->json($data, 500);
         }
     }
 
@@ -151,7 +151,7 @@ class PropertyController extends Controller
 
             $data['status'] = 'Failed';
             $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
+            return response()->json($data, 500);
         }
     }
 }

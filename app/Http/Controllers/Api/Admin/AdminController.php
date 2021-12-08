@@ -103,7 +103,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Tenants retrieved successfully';
-            $data['data'] = Tenant::all()->orderBy('created_at', 'desc')->get();
+            $data['data'] = Tenant::orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -149,10 +149,10 @@ class AdminController extends Controller
     public function allLandlords()
     {
         try {
-
+dd('here');
             $data['status'] = 'Success';
             $data['message'] = 'Landlords retrieved successfully';
-            $data['data'] = Landlord::all()->orderBy('created_at', 'desc')->get();
+            $data['data'] = Landlord::orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -200,9 +200,10 @@ class AdminController extends Controller
     public function allProperties()
     {
         try{
+            // dd('Got here');
             $data['status'] = 'Success';
             $data['message'] = 'Properties retrieved successfully';
-            $data['data'] = Property::all()->orderBy('created_at', 'desc')->get();
+            $data['data'] = Property::orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -247,7 +248,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Reservations retrieved successfully';
-            $data['data'] = PropertyReservation::all()->orderBy('created_at', 'desc');
+            $data['data'] = PropertyReservation::orderBy('created_at', 'desc');
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -269,7 +270,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Tickets retrieved successfully';
-            $data['data'] = Ticket::all()->orderBy('created_at', 'desc')->get();
+            $data['data'] = Ticket::orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
