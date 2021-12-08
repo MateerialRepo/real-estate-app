@@ -42,6 +42,15 @@ class Landlord extends Authenticatable
         $this->attributes['password'] = Hash::make($value);
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->tenant_unique_id = "LND-".rand(1000000, 9999999)."-BRC";
+        });
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

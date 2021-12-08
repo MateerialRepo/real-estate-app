@@ -66,7 +66,7 @@ class PropertyController extends Controller
             $landlord = Auth::user();
             $property_data = $request->all();
             $property_data['landlord_id'] = $landlord->id;
-            $property_data['property_unique_id'] = "PRP-" . mt_rand(10000000, 99999999) . "-BRC";
+            $property_data['property_unique_id'] = "PRP-" . mt_rand(100000000, 999999999) . "-BRC";
             $property_data['property_images'] = $imageslink;
             $property_data['property_amenities'] = $request->property_amenities;
             $property_data['lga'] = "none";

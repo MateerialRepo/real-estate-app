@@ -13,6 +13,7 @@ class Tenant extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
+
     protected $with = ['referee', 'nextOfKin', 'property', 'propertyLike', 'propertyReservation','transaction', 'document'];
 
     protected $fillable = [
@@ -38,6 +39,16 @@ class Tenant extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($value);
     }
+    
+    //setting tenant_unique_id to random string
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->tenant_unique_id = "TNT-".rand(100000000, 999999999)."-BRC";
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,6 +67,7 @@ class Tenant extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 
     public function referee()
     {
