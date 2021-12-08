@@ -47,7 +47,7 @@ class Landlord extends Authenticatable
         parent::boot();
 
         static::creating(function ($model) {
-            $model->tenant_unique_id = "LND-".rand(1000000, 9999999)."-BRC";
+            $model->landlord_unique_id = "LND-".rand(100000000, 999999999)."-BRC";
         });
     }
 

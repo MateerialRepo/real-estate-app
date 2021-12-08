@@ -122,7 +122,7 @@ class DocumentController extends Controller
             ->orderBy('created_at', 'desc')->get();
 
         $data['status'] = 'Success';
-        $data['message'] = 'Tickets Fetched Successfully';
+        $data['message'] = 'Documentss Fetched Successfully';
         $data['data'] = $documents;
         return response()->json($data, 200);
     }
@@ -193,7 +193,7 @@ class DocumentController extends Controller
             ->orderBy('created_at', 'desc')->get();
 
         $data['status'] = 'Success';
-        $data['message'] = 'Tickets Fetched Successfully';
+        $data['message'] = 'Documents Fetched Successfully';
         $data['data'] = $documents;
         return response()->json($data, 200);
     }
@@ -211,7 +211,7 @@ class DocumentController extends Controller
                 return response()->json(['error' => $validator->errors()], 401);
             };
 
-            $unique_id = 'DOC-' . Str::random(7) . time() . '-BRC';
+            $unique_id = 'DOC-' . rand(100000000, 999999999) . time() . '-BRC';
 
             $user = Auth::user();
 
@@ -261,7 +261,7 @@ class DocumentController extends Controller
         $documents = Document::all()->orderBy('created_at', 'desc')->get();
 
         $data['status'] = 'Success';
-        $data['message'] = 'Tickets Fetched Successfully';
+        $data['message'] = 'Documents Fetched Successfully';
         $data['data'] = $documents;
         return response()->json($data, 200);
     }
@@ -278,7 +278,7 @@ class DocumentController extends Controller
                 return response()->json(['error' => $validator->errors()], 401);
             };
 
-            $unique_id = 'DOC-' . Str::random(7) . time() . '-BRC';
+            $unique_id = 'DOC-' . rand(100000000, 999999999) . time() . '-BRC';
 
 
             $document_unique_id = $unique_id;

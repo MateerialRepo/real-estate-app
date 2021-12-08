@@ -34,10 +34,11 @@ class TicketCommentController extends Controller
             $data['status'] = 'Success';
             $data['message'] = 'Comment Created Successfully';
             return response()->json($data, 200);
+            
         } catch (\Exception $exception) {
             $data['status'] = 'Failed';
             $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
+            return response()->json($data, 500);
         }
     }
 }

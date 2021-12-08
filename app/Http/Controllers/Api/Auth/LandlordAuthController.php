@@ -55,11 +55,13 @@ class LandlordAuthController extends Controller
     public function register(LandlordAuthRequest $request)
     {
         try {
+            
             $landlord = Landlord::firstOrCreate($request->validated());
             return response()->json([
                 'success' => true,
                 'user' => $landlord
             ], 201);
+
         } catch (\Exception $exception) {
             return response()->json([
                 'success' => true,

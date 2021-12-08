@@ -182,7 +182,7 @@ class TicketController extends Controller
 
     //*********************************************LANDLORD TICKET FUNCTIONALITIES ************************************//
 
-    public function fetchAllLandlord()
+    public function fetchLandlordTickets()
     {
         try {
 

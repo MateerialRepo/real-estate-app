@@ -134,7 +134,7 @@ class LandlordController extends Controller
             $landlord = Auth::guard('landlord');
             $landlord->user()->update([
                 'kyc_type' => $request->kyc_type,
-                'kyc_id' => "/landlords/landlordkyc/".$idVerification,
+                'kyc_id' => env('APP_URL')."/landlords/landlordkyc/".$idVerification,
                 'is_approved' => true
                 ]);
             

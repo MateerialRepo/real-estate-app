@@ -117,7 +117,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::delete('/property/{unique_id}', [PropertyController::class, 'deleteProperty']); //create and test
 
             // Document routes
-            Route::get('/document', [DocumentController::class, 'fetchAllLAndlordDocument']);
+            Route::get('/document', [DocumentController::class, 'fetchAllLandlordDocument']);
             Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
             Route::post('/document', [DocumentController::class, 'createLandlordDocument']);
             Route::post('/document/{unique_id}', [DocumentController::class, 'updateDocument']);
