@@ -15,7 +15,7 @@ class CreateLandlordsTable extends Migration
     {
         Schema::create('landlords', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('landlord_id')->default("LND-" . mt_rand(10000000,99999999) . "-BRC");
+            $table->string('landlord_unique_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();

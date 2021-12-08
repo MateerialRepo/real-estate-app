@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
             $table->string('ticket_category');
             $table->text('description')->nullable();
             $table->json('ticket_img')->nullable();
-            $table->string('landlord_id');
+            $table->foreignId('landlord_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
         });

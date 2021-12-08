@@ -15,7 +15,7 @@ class CreateTenantsTable extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('tenant_id')->default("TNT-" . mt_rand(10000000,99999999) . "-BRC");
+            $table->string('tenant_unique_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
