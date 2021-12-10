@@ -199,8 +199,9 @@ dd('here');
 
     public function allProperties()
     {
+
+
         try{
-            // dd('Got here');
             $data['status'] = 'Success';
             $data['message'] = 'Properties retrieved successfully';
             $data['data'] = Property::orderBy('created_at', 'desc')->get();

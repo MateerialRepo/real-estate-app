@@ -13,7 +13,6 @@ class Tenant extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-
     protected $with = ['referee', 'nextOfKin', 'property', 'propertyLike', 'propertyReservation','transaction', 'document'];
 
     protected $fillable = [

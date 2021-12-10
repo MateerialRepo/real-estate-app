@@ -22,25 +22,6 @@ class PropertyController extends Controller
         return response()->json($data, 200);
     }
 
-    //fetches a single property
-    public function getProperty($unique_id)
-    {
-        $property = Property::where('property_unique_id', $unique_id)->get();
-        $data['status'] = 'Success';
-        $data['message'] = 'Fetched property Successfully';
-        $data['property'] = $property;
-        return response()->json($data, 200);
-    }
-
-    // fetch verified properties
-    public function fetchVerifiedProperties(){
-        $properties = Property::where('is_verified', 'verified')->get();
-        $data['status'] = 'Success';
-        $data['message'] = 'Fetched properties Successfully';
-        $data['properties'] = $properties;
-        return response()->json($data, 200);
-    }
-
 
     //save property
     public function createProperty(CreatePropertyRequest $request)
@@ -154,4 +135,26 @@ class PropertyController extends Controller
             return response()->json($data, 500);
         }
     }
+
+
+    //*************************Unprotected routes for tenants end */
+    // fetch verified properties
+    public function fetchProperties(){
+        $properties = Property::all();
+        $data['status'] = 'Success';
+        $data['message'] = 'Fetched properties Successfully';
+        $data['properties'] = $properties;
+        return response()->json($data, 200);
+    }
+
+    //fetches a single property
+    public function fetchSingleProperty($unique_id)
+    {
+        $property = Property::where('property_unique_id', $unique_id)->get();
+        $data['status'] = 'Success';
+        $data['message'] = 'Fetched property Successfully';
+        $data['property'] = $property;
+        return response()->json($data, 200);
+    }
+
 }

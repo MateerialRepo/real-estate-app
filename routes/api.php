@@ -47,10 +47,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);//works for both landlord and tenant
 
         // fetch verified properties for user display
-        Route::get('/property', [PropertyController::class, 'fetchVerifiedProperties']);
+        Route::get('/property', [PropertyController::class, 'fetchProperties']);
         //fetch single property
-        
-
+        Route::get('/property/{id}', [PropertyController::class, 'fetchSingleProperty']);
 
 
         Route::middleware('auth:tenant')->group(function () {
