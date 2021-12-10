@@ -96,52 +96,7 @@ class AdminController extends Controller
         
     }   
 
-    //*********************************Handling tenants activities*************************************************/ 
-    public function allTenants()
-    {
-        try{
-
-            $data['status'] = 'Success';
-            $data['message'] = 'Tenants retrieved successfully';
-            $data['data'] = Tenant::orderBy('created_at', 'desc')->get();
-            return response()->json($data, 200);
-
-        } catch (\Exception $e) {
-
-            $data['status'] = 'Failed';
-            $data['error'] = $e->getMessage();
-            return response()->json($data, 500);
-
-        }
-        
-    }
-
-    public function singleTenant(Tenant $tenant, $id)
-    {
-        try{
-
-            $data['status'] = 'Success';
-            $data['message'] = 'Tenant retrieved successfully';
-            $data['data'] = $tenant->find($id);
-            return response()->json($data, 200);
-
-        } catch (\Exception $e) {
-
-            $data['status'] = 'Failed';
-            $data['error'] = $e->getMessage();
-            return response()->json($data, 500);
-
-        }
-        
-    }
-
-    public function destroyTenant(Tenant $tenant, $id)
-    {
-
-        $tenant->delete();
-
-        return response()->json(['message' => 'Tenant deleted successfully']);
-    }
+   
 
 
 
@@ -149,7 +104,7 @@ class AdminController extends Controller
     public function allLandlords()
     {
         try {
-dd('here');
+            dd('here');
             $data['status'] = 'Success';
             $data['message'] = 'Landlords retrieved successfully';
             $data['data'] = Landlord::orderBy('created_at', 'desc')->get();

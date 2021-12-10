@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\Tenant;
 
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -200,4 +202,57 @@ class TenantController extends Controller
     {
         //
     }
+
+
+     //*********************************Handling ADmin tenants activities*************************************************/ 
+     public function allTenants()
+     {
+        //  dd('We got here o');
+
+         try{
+ 
+             $data['status'] = 'Success';
+             $data['message'] = 'Tenants retrieved successfully';
+             $data['data'] = Tenant::orderBy('created_at', 'desc')->get();
+            // $data['data'] = DB::table('tenants')->get();
+ 
+         } catch (\Exception $e) {
+ 
+             $data['status'] = 'Failed';
+             $data['error'] = $e->getMessage();
+             return response()->json($data, 500);
+ 
+         }
+
+         return response()->json($data, 200);
+
+         
+     }
+ 
+     public function singleTenant(Tenant $tenant, $id)
+     {
+         try{
+ 
+             $data['status'] = 'Success';
+             $data['message'] = 'Tenant retrieved successfully';
+             $data['data'] = $tenant->find($id);
+             return response()->json($data, 200);
+ 
+         } catch (\Exception $e) {
+ 
+             $data['status'] = 'Failed';
+             $data['error'] = $e->getMessage();
+             return response()->json($data, 500);
+ 
+         }
+         
+     }
+ 
+     public function destroyTenant(Tenant $tenant, $id)
+     {
+ 
+         $tenant->delete();
+ 
+         return response()->json(['message' => 'Tenant deleted successfully']);
+     }
 }

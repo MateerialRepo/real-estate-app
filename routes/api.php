@@ -137,6 +137,12 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::prefix('v1/admin')->group(function () {
         Route::post('/login', [AdminAuthController::class, 'login']);
 
+        // Route::get('/tenant', function () {
+        //     return 'Got to the All tenant route successfully';
+        // });
+
+        // Route::get('/tenant', [TenantController::class, 'allTenants']);
+
         Route::middleware('auth:admin')->group(function () {
             // access control
             Route::get('/', [AdminController::class, 'index']);
@@ -145,9 +151,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::delete('/{id}', [AdminController::class, 'deleteAdminUser']);
 
             // Tenant activities
-            Route::get('/tenant', [AdminController::class, 'allTenants']);
-            Route::get('/tenant/{id}', [AdminController::class, 'singleTenant']);
-            Route::delete('/tenant/{id}', [AdminController::class, 'destroyTenant']);
+            Route::get('/tenant', [TenantController::class, 'allTenants']);
+            
+            Route::get('/tenant/{id}', [TenantController::class, 'singleTenant']);
+            Route::delete('/tenant/{id}', [TenantController::class, 'destroyTenant']);
 
             // Landlord activities
             Route::get('/landlord', [AdminController::class, 'allLandlords']);
