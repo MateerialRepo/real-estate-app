@@ -18,7 +18,7 @@ class AdminController extends Controller
     {
         try{
 
-            $admins = Admin::all()->orderBy('created_at', 'desc')->get();
+            $admins = Admin::orderBy('created_at', 'desc')->get();
             return response()->json($admins);
 
         } catch (\Exception $e) {
@@ -27,23 +27,23 @@ class AdminController extends Controller
             $data['error'] = $e->getMessage();
             return response()->json($data, 500);
         }
-        
+
     }
 
     public function show($id)
     {
         try{
-                
+
                 $admin = Admin::find($id);
                 return response()->json($admin);
-    
+
             } catch (\Exception $e) {
-    
+
                 $data['status'] = 'Failed';
                 $data['error'] = $e->getMessage();
                 return response()->json($data, 500);
         }
-    
+
     }
 
     //*********************************Create admin users with role*************************************************//
@@ -57,7 +57,7 @@ class AdminController extends Controller
                 'password' => bcrypt($request->password),
                 'role' => $request->role,
             ]);
-    
+
             return response()->json([
                 'message' => 'Admin user created successfully',
                 'admin' => $admin
@@ -68,7 +68,7 @@ class AdminController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-        
+
     }
 
 
@@ -82,7 +82,7 @@ class AdminController extends Controller
                     'message' => 'Admin user not found'
                 ], 404);
             }
-    
+
             $admin->delete();
             return response()->json([
                 'message' => 'Admin user deleted successfully'
@@ -93,10 +93,10 @@ class AdminController extends Controller
             $data['error'] = $e->getMessage();
             return response()->json($data, 500);
         }
-        
-    }   
 
-   
+    }
+
+
 
 
 
@@ -104,7 +104,6 @@ class AdminController extends Controller
     public function allLandlords()
     {
         try {
-            dd('here');
             $data['status'] = 'Success';
             $data['message'] = 'Landlords retrieved successfully';
             $data['data'] = Landlord::orderBy('created_at', 'desc')->get();
@@ -169,7 +168,7 @@ class AdminController extends Controller
             return response()->json($data, 500);
 
         }
-        
+
     }
 
     public function singleProperty(Property $property, $id)
@@ -179,17 +178,17 @@ class AdminController extends Controller
                 $data['message'] = 'Property retrieved successfully';
                 $data['data'] = $property->find($id);
                 return response()->json($data, 200);
-    
+
         } catch (\Exception $e) {
-    
+
                 $data['status'] = 'Failed';
                 $data['error'] = $e->getMessage();
                 return response()->json($data, 500);
         }
-        
+
     }
 
-    
+
     public function destroyProperty(Property $property, $id)
     {
         $property->delete();
@@ -214,7 +213,7 @@ class AdminController extends Controller
             return response()->json($data, 500);
 
         }
-        
+
     }
 
 
@@ -236,26 +235,26 @@ class AdminController extends Controller
             return response()->json($data, 500);
 
         }
-      
+
     }
 
 
     public function singleTicket(Ticket $ticket, $id)
     {
         try{
-                
+
             $data['status'] = 'Success';
             $data['message'] = 'Ticket retrieved successfully';
             $data['data'] = $ticket->find($id);
             return response()->json($data, 200);
-    
+
         } catch (\Exception $e) {
-    
+
             $data['status'] = 'Failed';
             $data['error'] = $e->getMessage();
             return response()->json($data, 500);
         }
-        
+
     }
 
     //comment on ticket
@@ -276,7 +275,7 @@ class AdminController extends Controller
             $data['error'] = $e->getMessage();
             return response()->json($data, 500);
         }
-        
+
     }
 
     //assign ticket to user
@@ -296,7 +295,7 @@ class AdminController extends Controller
             $data['error'] = $e->getMessage();
             return response()->json($data, 500);
         }
-        
+
     }
 
 }
