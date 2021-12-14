@@ -127,6 +127,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle']);
             Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
 
+            //Support Ticket activities
+            Route::post('/support', [LandlordController::class, 'createSupportTicket']);
+
 
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });
@@ -167,6 +170,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
             Route::post('/document', [DocumentController::class, 'createDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
+
+            
 
 
             Route::post('/logout', [AdminAuthController::class, 'logout']);

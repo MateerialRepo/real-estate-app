@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api\Landlord;
 
 use Illuminate\Http\Request;
+use App\Models\SupportTicket;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\SupportTicketRequest;
 use App\Http\Requests\UpdateLandlordProfileRequest;
 
 class LandlordController extends Controller
@@ -155,4 +157,40 @@ class LandlordController extends Controller
     }
 
     
+    //********************************Support Tickets to the Admin************************************//
+    public function createSupportTicket(SupportTicketRequest $request){
+
+        try{
+
+            $data = $request->validated();
+    
+            dd($data);
+
+            $landlord = Auth::user();
+            
+            // $tenant->nextOfKin()->updateOrCreate(
+            //     ['tenant_id' => $tenant->id],
+            //     $request->validated()
+            // );
+            $landlord = SupportTicket::create([
+                'user_type' => $request->user_type,
+                'subject' => $request->subject,
+                'subject' => $request->subject,
+                'subject' => $request->subject,
+                'message' => $request->message,
+                'status' => 'Open',
+                'landlord_id' => $landlord->id
+                ]);
+            
+            $data['status'] = 'Success';
+            $data['message'] = 'Support Ticket Created Successfully';
+            return response()->json($data, 200);
+
+        } catch (\Exception $exception) {
+            $data['status'] = 'Failed';
+            $data['message'] = $exception->getMessage();
+            return response()->json($data, 400);
+        }
+
+    }
 }
