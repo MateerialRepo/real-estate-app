@@ -23,7 +23,6 @@ class TicketController extends Controller
                 'description' => 'required|string',
                 'ticket_img.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
                 'landlord_id' => 'required',
-
             ]);
 
             if ($validator->fails()) {

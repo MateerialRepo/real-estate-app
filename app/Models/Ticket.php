@@ -31,16 +31,18 @@ class Ticket extends Model
 
     public function tenant()
     {
-        return $this->hasOne(Tenant::class);
+        return $this->belongsTo(Tenant::class);
     }
 
     public function landlord()
     {
-        return $this->hasOne(Landlord::class);
+        return $this->belongsTo(Landlord::class);
     }
 
     public function ticketComment()
     {
         return $this->hasMany(TicketComment::class);
     }
+
+
 }

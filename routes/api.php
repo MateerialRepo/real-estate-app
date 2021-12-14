@@ -137,12 +137,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
     Route::prefix('v1/admin')->group(function () {
         Route::post('/login', [AdminAuthController::class, 'login']);
 
-        // Route::get('/tenant', function () {
-        //     return 'Got to the All tenant route successfully';
-        // });
-
-        // Route::get('/tenant', [TenantController::class, 'allTenants']);
-
         Route::middleware('auth:admin')->group(function () {
             // access control
             Route::get('/admin', [AdminController::class, 'index']);

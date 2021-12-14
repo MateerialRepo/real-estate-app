@@ -203,7 +203,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Reservations retrieved successfully';
-            $data['data'] = PropertyReservation::orderBy('created_at', 'desc');
+            $data['data'] = PropertyReservation::orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {

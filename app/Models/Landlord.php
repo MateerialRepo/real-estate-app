@@ -15,7 +15,7 @@ class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $with = ['property', 'propertyLike', 'propertyReservation','transaction','document'];
+    protected $with = ['property', 'propertyLike', 'propertyReservation','transaction','document', 'ticket'];
 
 
     protected $fillable = [
@@ -87,5 +87,9 @@ class Landlord extends Authenticatable
 
     public function document(){
         return $this->hasMany(Document::class);
+    }
+    
+    public function ticket(){
+        return $this->hasMany(Ticket::class);
     }
 }
