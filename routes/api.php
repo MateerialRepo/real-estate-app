@@ -101,7 +101,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::post('/login', [LandlordAuthController::class, 'login']);
         Route::post('/password/forgot', [ForgotPasswordController::class, 'forgot']);//works for both landlord and tenant
         Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);//works for both landlord and tenant
-    
+
         Route::middleware('auth:landlord')->group(function () {
             Route::get('/', [LandlordController::class, 'index']);
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']); //test
@@ -145,14 +145,14 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
         Route::middleware('auth:admin')->group(function () {
             // access control
-            Route::get('/', [AdminController::class, 'index']);
-            Route::get('/{id}', [AdminController::class, 'show']);
-            Route::post('/', [AdminController::class, 'createAdminUser']);
-            Route::delete('/{id}', [AdminController::class, 'deleteAdminUser']);
+            Route::get('/admin', [AdminController::class, 'index']);
+            Route::get('/admin/{id}', [AdminController::class, 'show']);
+            Route::post('/admin', [AdminController::class, 'createAdminUser']);
+            Route::delete('admin/{id}', [AdminController::class, 'deleteAdminUser']);
 
             // Tenant activities
             Route::get('/tenant', [TenantController::class, 'allTenants']);
-            
+
             Route::get('/tenant/{id}', [TenantController::class, 'singleTenant']);
             Route::delete('/tenant/{id}', [TenantController::class, 'destroyTenant']);
 
@@ -161,7 +161,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/landlord/{id}', [AdminController::class, 'singleLandlord']);
             Route::delete('/landlord/{id}', [AdminController::class, 'destroyLandlord']);
 
-            // Property activities                                              
+            // Property activities
             Route::get('/property', [AdminController::class, 'allProperties']);
             Route::get('/property/{id}', [AdminController::class, 'singleProperty']);
             Route::get('property/reservation', [AdminController::class, 'allReservations']);
