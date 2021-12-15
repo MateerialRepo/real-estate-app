@@ -172,8 +172,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/document', [DocumentController::class, 'createDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
 
-            
-
+            // Transaction activities
+            Route::get('/transactions', [PaymentController::class, 'fetchAllTransactions']);
 
             Route::post('/logout', [AdminAuthController::class, 'logout']);
         });

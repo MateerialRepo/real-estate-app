@@ -86,4 +86,15 @@ class PaymentController extends Controller
 
     
     }
+
+
+    //fetchall transasctions
+
+    public function fetchAllTransactions(){
+        $data['status'] = 'Success';
+        $data['message'] = 'Transactions retrieved successfully';
+        $data['transactions'] = Transaction::orderBy('created_at', 'desc')->get();
+        return response()->json($data, 200);
+        
+    }
 }
