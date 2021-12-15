@@ -164,23 +164,35 @@ class LandlordController extends Controller
 
             $data = $request->validated();
     
-            dd($data);
-
-            $landlord = Auth::user();
+            $user = Auth::user();
             
             // $tenant->nextOfKin()->updateOrCreate(
             //     ['tenant_id' => $tenant->id],
             //     $request->validated()
             // );
-            $landlord = SupportTicket::create([
-                'user_type' => $request->user_type,
-                'subject' => $request->subject,
-                'subject' => $request->subject,
-                'subject' => $request->subject,
-                'message' => $request->message,
-                'status' => 'Open',
-                'landlord_id' => $landlord->id
-                ]);
+
+            $support_files = [];
+
+            if ($request->has('img')) {
+
+                $images = $request->file('img');
+
+                foreach ($images as $key => $image) {
+
+                    $imageName = time() . rand(1000000, 9999999) . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('/support'), $imageName);
+                    $support_files[$key] = env('APP_URL') . '/support' . $imageName;
+                };
+            };
+
+            $data['user_id'] = $user->id;
+
+            $data['img'] = $support_files;
+
+            // dd($data);
+
+            SupportTicket::firstOrCreate($data);
+            unset($data);
             
             $data['status'] = 'Success';
             $data['message'] = 'Support Ticket Created Successfully';
