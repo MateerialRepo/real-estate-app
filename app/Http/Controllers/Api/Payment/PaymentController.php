@@ -58,10 +58,9 @@ class PaymentController extends Controller
     {
         // get reference  from request
         $reference = request('reference') ?? request('trxref');
-
         // verify payment details
         $payment = Paystack::transaction()->verify($reference)->response('data');
-
+        dd($payment);
         // check payment status
         if ($payment['status'] == 'success') {
             // payment is successful
