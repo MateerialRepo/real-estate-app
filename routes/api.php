@@ -85,7 +85,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
 
             // payment routes
-            Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+            Route::get('/payment/callback', [PaymentController::class, 'callback']);
             Route::get('/transactions', [PaymentController::class, 'getTransactions']);
 
 

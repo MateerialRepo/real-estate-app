@@ -33,7 +33,7 @@ class PaymentController extends Controller
     {
         $paymentDetails = Paystack::getPaymentData();
 
-        // dd($paymentDetails);
+        dd($paymentDetails);
 
         // save the data in the transaction table
         $transaction = new Transaction();
@@ -53,6 +53,24 @@ class PaymentController extends Controller
         // you can store the authorization_code in your db to allow for recurrent subscriptions
         // you can then redirect or do whatever you want
     }
+
+    public function callback()
+    {
+        // get reference  from request
+        $reference = request('reference') ?? request('trxref');
+
+        // verify payment details
+        $payment = Paystack::transaction()->verify($reference)->response('data');
+
+        // check payment status
+        if ($payment['status'] == 'success') {
+            // payment is successful
+            dd($payment);
+        } else {
+            // payment is not successful
+        }
+    }
+
 
 
     // Get users transactions
