@@ -298,4 +298,47 @@ class AdminController extends Controller
 
     }
 
+
+    // Overview Page for Admin
+    public function adminOverview(){
+        // Total no of tickets
+        $totalNoOfTickets = Ticket::count();
+
+        // Total no of Opened Tickets
+        $totalOpenTickets = Ticket::where('ticket_status','open')->count();
+
+        // Total number of closed tickets
+        $totalClosedTickets = $totalNoOfTickets - $totalOpenTickets;
+
+        // Total no of properties
+        $totalProperties = Property::count();
+
+        // Total no of available Properties
+        $totalAvailableProperties = Property::where('is_available', 'available')->count();
+
+        // Total no of occupied properties
+        $totalOccupiedProperties = $totalProperties - $totalAvailableProperties;
+
+        // Total number of pending verified properties
+        $noOfVerifiedProperties = Property::where('is_verified', 'verified')->count();
+
+        // Total unverified Properties
+        $totalUnverifiedProperties = $totalProperties - $noOfVerifiedProperties;
+
+        $data['status'] = 'Success';
+        $data['totalNoOfTickets'] = $totalNoOfTickets;
+        $data['totalOpenTickets'] = $totalOpenTickets;
+        $data['totalClosedTickets'] = $totalClosedTickets;
+        $data['totalProperties'] = $totalProperties;
+        $data['totalAvailableProperties'] = $totalAvailableProperties;
+        $data['totalOccupiedProperties'] = $totalOccupiedProperties;
+        $data['verifiedProperties'] = $noOfVerifiedProperties;
+        $data['unverifiedProperties'] = $totalUnverifiedProperties;
+
+
+        return response()->json($data, 200);
+
+
+    }
+
 }

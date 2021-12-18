@@ -50,7 +50,7 @@ class TicketController extends Controller
             $ticket_data = $request->all();
             $ticket_data['tenant_id'] = $tenant->id;
             $ticket_data['ticket_img'] = $ticket_collection;
-            $ticket_data['ticket_status'] = 'Open';
+            $ticket_data['ticket_status'] = 'open';
             $ticket_data['ticket_unique_id'] = "TKT-" . mt_rand(10000000, 99999999) . "-BRC";
 
 
@@ -74,7 +74,7 @@ class TicketController extends Controller
     {
         try {
             $ticket = Ticket::where('ticket_unique_id', $unique_id)->first();
-            $ticket->ticket_status = 'Resolved';
+            $ticket->ticket_status = 'resolved';
             $ticket->save();
 
             $data['status'] = 'Success';
@@ -92,7 +92,7 @@ class TicketController extends Controller
     {
         try {
             $ticket = Ticket::where('ticket_unique_id', $unique_id)->first();
-            $ticket->ticket_status = 'Open';
+            $ticket->ticket_status = 'open';
             $ticket->save();
 
             $data['status'] = 'Success';

@@ -178,6 +178,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             // Transaction activities
             Route::get('/transactions', [PaymentController::class, 'fetchAllTransactions']);
 
+            // Admin Overview Page
+            Route::get('/admin-overview', [AdminController::class, 'adminOverview']);
+
             Route::post('/logout', [AdminAuthController::class, 'logout']);
         });
     });
