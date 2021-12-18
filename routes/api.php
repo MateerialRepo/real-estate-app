@@ -131,6 +131,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             //Support Ticket activities
             Route::post('/support', [LandlordController::class, 'createSupportTicket']);
 
+            // Landlord Overview
+            Route::get('/overview', [LandlordController::class, 'overview']);
+
 
             Route::post('/logout', [LandlordAuthController::class, 'logout']);
         });

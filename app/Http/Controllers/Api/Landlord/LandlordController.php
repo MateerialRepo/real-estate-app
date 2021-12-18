@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\Landlord;
 
+use App\Models\Ticket;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Http\Controllers\Controller;
@@ -204,5 +206,36 @@ class LandlordController extends Controller
             return response()->json($data, 400);
         }
 
+    }
+
+
+    // Overview for landlord
+    public function overview()
+    {
+        $landlord = Auth::user();
+        $noOfTotalListedProperties = Property::where('landlord_id', $landlord->id)->count();
+        // Total number of properties available
+        $noOfAvailableProperties = Property::where('landlord_id', $landlord->id)->where('is_available', 'available')->count();
+        // Total number of properties not available
+        $noOfRentedProperties = $noOfTotalListedProperties - $noOfAvailableProperties;
+        // Total number of properties not verified
+        $noOfVerifiedProperties = Property::where('landlord_id', $landlord->id)->where('is_verified', 'verified')->count();
+        $noOfUnverifiedProperties = $noOfTotalListedProperties - $noOfVerifiedProperties;
+
+        // total number of tickets assigned to landlord
+        $noOfTickets = Ticket::where('landlord_id', $landlord->id)->count();
+
+        // total number of Tenants through properties using eloquent relationship
+
+
+        $data['status'] = 'Success';
+        $data['TotalListedProperties'] = $noOfTotalListedProperties;
+        $data['AvailableProperties'] = $noOfAvailableProperties;
+        $data['RentedProperties'] = $noOfRentedProperties;
+        $data['VerifiedProperties'] = $noOfVerifiedProperties;
+        $data['UnverifiedProperties'] = $noOfUnverifiedProperties;
+        $data['AssignedTickets'] = $noOfTickets;
+
+        return response()->json($data, 200);
     }
 }

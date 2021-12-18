@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreatePropertyRequest;
+use App\Models\Ticket;
 
 class PropertyController extends Controller
 {
@@ -135,6 +136,11 @@ class PropertyController extends Controller
             return response()->json($data, 500);
         }
     }
+
+
+
+
+
 
 
     //*************************Unprotected routes for tenants end */
