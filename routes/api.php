@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Document\DocumentController;
 use App\Http\Controllers\Api\Landlord\LandlordController;
 use App\Http\Controllers\Api\Property\PropertyController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Ticket\SupportTicketController;
 use App\Http\Controllers\Api\Ticket\TicketCommentController;
 use App\Http\Controllers\Api\Property\PropertyLikeController;
 use App\Http\Controllers\Api\Property\PropertyReservationController;
@@ -129,8 +130,11 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
 
             //Support Ticket activities
-            Route::post('/support', [LandlordController::class, 'createSupportTicket']);
+            Route::post('/support', [SupportTicketController::class, 'createSupportTicket']);
+            Route::get('/support', [SupportTicketController::class, 'getLandlordSupportTicketList']);
+            Route::get('/support/{id}', [SupportTicketController::class, 'getSingleSupportTicket']);
 
+            
             // Landlord Overview
             Route::get('/overview', [LandlordController::class, 'overview']);
 
@@ -174,6 +178,16 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
             Route::post('/document', [DocumentController::class, 'createDocument']);
             Route::delete('/document/{unique_id}', [DocumentController::class, 'deleteDocument']);
+
+            //Ticket and Support activities
+            Route::get('/ticket', [AdminController::class, 'allTickets']);
+            Route::get('/ticket/{id}', [AdminController::class, 'singleTicket']);
+            Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
+            Route::post('/ticket/{id}/assign', [AdminController::class, 'assignTicket']);
+
+            Route::get('/support', [SupportTicketController::class, 'getSupportTickets']);
+            Route::get('/support/{id}', [SupportTicketController::class, 'getSingleSupportTicket']);
+
 
             // Transaction activities
             Route::get('/transactions', [PaymentController::class, 'fetchAllTransactions']);

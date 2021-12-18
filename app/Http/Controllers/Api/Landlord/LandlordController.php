@@ -158,50 +158,6 @@ class LandlordController extends Controller
 
     }
 
-    
-    //********************************Support Tickets to the Admin************************************//
-    public function createSupportTicket(SupportTicketRequest $request){
-
-        try{
-
-            $ticketData = $request->validated();
-    
-            $user = Auth::user();
-
-            $support_files = [];
-
-            if ($request->has('img')) {
-
-                $images = $request->file('img');
-
-                foreach ($images as $key => $image) {
-
-                    $imageName = time() . rand(1000000, 9999999) . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('/support'), $imageName);
-                    $support_files[$key] = env('APP_URL') . '/support' . $imageName;
-                };
-            };
-
-            $ticketData['user_id'] = $user->id;
-
-            $ticketData['img'] = $support_files;
-
-            // dd($data);
-
-            SupportTicket::firstOrCreate($ticketData);
-            
-            $data['status'] = 'Success';
-            $data['message'] = 'Support Ticket Created Successfully';
-            return response()->json($data, 200);
-
-        } catch (\Exception $exception) {
-            $data['status'] = 'Failed';
-            $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
-        }
-
-    }
-
 
     // Overview for landlord
     public function overview()

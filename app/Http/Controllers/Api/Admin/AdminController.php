@@ -257,26 +257,6 @@ class AdminController extends Controller
 
     }
 
-    //comment on ticket
-    public function commentOnTicket(Ticket $ticket, $id, Request $request)
-    {
-        try{
-            $ticket = $ticket->find($id);
-            $ticket->comments()->create([
-                'comment' => $request->comment,
-                'user_id' => $request->user_id,
-            ]);
-
-            return response()->json(['message' => 'Comment added successfully']);
-
-        } catch (\Exception $e) {
-
-            $data['status'] = 'Failed';
-            $data['error'] = $e->getMessage();
-            return response()->json($data, 500);
-        }
-
-    }
 
     //assign ticket to user
     public function assignTicket(Ticket $ticket, $id, Request $request)
