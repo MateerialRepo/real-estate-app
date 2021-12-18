@@ -164,14 +164,9 @@ class LandlordController extends Controller
 
         try{
 
-            $data = $request->validated();
+            $ticketData = $request->validated();
     
             $user = Auth::user();
-            
-            // $tenant->nextOfKin()->updateOrCreate(
-            //     ['tenant_id' => $tenant->id],
-            //     $request->validated()
-            // );
 
             $support_files = [];
 
@@ -187,14 +182,13 @@ class LandlordController extends Controller
                 };
             };
 
-            $data['user_id'] = $user->id;
+            $ticketData['user_id'] = $user->id;
 
-            $data['img'] = $support_files;
+            $ticketData['img'] = $support_files;
 
             // dd($data);
 
-            SupportTicket::firstOrCreate($data);
-            unset($data);
+            SupportTicket::firstOrCreate($ticketData);
             
             $data['status'] = 'Success';
             $data['message'] = 'Support Ticket Created Successfully';
