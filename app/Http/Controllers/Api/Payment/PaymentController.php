@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Payment;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Property;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -36,18 +37,7 @@ class PaymentController extends Controller
         dd($paymentDetails);
 
         // save the data in the transaction table
-        $transaction = new Transaction();
-        $transaction->tenant_id = Auth::user()->id;
-        $transaction->property_id = $paymentDetails['data']['metadata']['property_id'];
-        $transaction->amount = $paymentDetails['data']['amount']/100;
-        $transaction->description = $paymentDetails['data']['reference'];
-        $transaction->status = $paymentDetails['data']['status'];
-        $transaction->save();
-
-        $data['status'] = 'Success';
-        $data['message'] = 'Payment successful';
-        $data['data'] = $paymentDetails['data'];
-        return response()->json($data, 200);
+        
 
         // Now you have the payment details,
         // you can store the authorization_code in your db to allow for recurrent subscriptions
@@ -68,6 +58,32 @@ class PaymentController extends Controller
         } else {
             // payment is not successful
         }
+    }
+
+
+    //save transaction data
+    public function saveTransaction(Request $request){
+
+        // TenantID, Amount, PropertyID, Description
+        // $transaction = new Transaction();
+        // $transaction->tenant_id = $request->tenant_id;
+        // $transaction->property_id = $request->property_id;
+        // $transaction->amount = $request->amount;
+        // $transaction->description = $request->description;
+        // $transaction->save();
+
+        $paymentData = $request->all();
+        $transaction = Transaction::create($paymentData);
+
+        $property = Property::findorFail($request->property_id);
+        $property->update([
+            'tenant_id'=>$request->tenant_id
+        ]);
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Payment successful';
+        $data['data'] = $transaction;
+        return response()->json($data, 200);
     }
 
 

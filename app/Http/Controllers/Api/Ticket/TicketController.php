@@ -3,31 +3,31 @@
 namespace App\Http\Controllers\Api\Ticket;
 
 use App\Models\Ticket;
+use App\Models\Property;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TicketComment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\CreateTicketRequest;
 
 class TicketController extends Controller
 {
     //create Ticket
-    public function createTicket(Request $request)
+    public function createTicket(CreateTicketRequest $request)
     {
         try {
 
-            $validator = Validator::make($request->all(), [
-                'ticket_title' => 'required|max:255',
-                'ticket_category' => 'required|string',
-                'description' => 'required|string',
-                'ticket_img.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
-                'landlord_id' => 'required',
-            ]);
+            $tenant = Auth::user();
 
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 401);
-            };
+            $tenantRentsProperty = Property::find($tenant->id);
+
+            if(!$tenantRentsProperty){
+                $data['status'] = 'Failed';
+                $data['message'] = 'Tenant has not rented any property';
+                return response()->json($data, 401);
+            }
 
 
             $ticket_collection = [];
@@ -36,9 +36,7 @@ class TicketController extends Controller
 
                 $images = $request->file('ticket_img');
 
-
                 foreach ($images as $key => $image) {
-
                     $imageName = time() . rand(1000000, 9999999) . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('/tenants/ticketimages'), $imageName);
                     $ticket_collection[$key] = env('APP_URL') . '/tenants/ticketimages/' . $imageName;
@@ -46,7 +44,6 @@ class TicketController extends Controller
             };
 
 
-            $tenant = Auth::user();
             $ticket_data = $request->all();
             $ticket_data['tenant_id'] = $tenant->id;
             $ticket_data['ticket_img'] = $ticket_collection;

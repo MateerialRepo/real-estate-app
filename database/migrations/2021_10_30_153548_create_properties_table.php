@@ -45,6 +45,7 @@ class CreatePropertiesTable extends Migration
             $table->string('side_attraction_details')->nullable();
             $table->string('is_available');
             $table->string('is_verified')->default('not verified');
+            $table->integer('tenant_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

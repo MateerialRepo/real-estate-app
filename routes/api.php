@@ -40,6 +40,11 @@ Route::get('/test', function () {
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
+    // payment routes
+    // Route::get('/payment/callback', [PaymentController::class, 'callback']);
+    // Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
+    Route::post('/transaction', [PaymentController::class, 'saveTransactions']);
+
     // Tenant routes
     Route::prefix('v1/tenant')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
@@ -72,7 +77,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
 
 
-
             // Document routes
             Route::get('/document', [DocumentController::class, 'fetchAllTenantDocument']);
             Route::get('/document/{unique_id}', [DocumentController::class, 'fetchSingleDocument']);
@@ -84,12 +88,6 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/property/like/{propertyId}', [PropertyLikeController::class, 'likeProperty']);
             Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
-
-            // payment routes
-            // Route::get('/payment/callback', [PaymentController::class, 'callback']);
-            Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
-            Route::get('/transactions', [PaymentController::class, 'getTransactions']);
-
 
 
             Route::post('/logout', [AuthController::class, 'logout']);
