@@ -21,7 +21,7 @@ class TicketController extends Controller
 
             $tenant = Auth::user();
 
-            $tenantRentsProperty = Property::find($tenant->id);
+            $tenantRentsProperty = Property::where('tenant_id', $tenant->id)->get();
 
             if(!$tenantRentsProperty){
                 $data['status'] = 'Failed';
