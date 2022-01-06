@@ -90,6 +90,10 @@ class PropertyController extends Controller
 
                 $landlord = Auth::guard('landlord')->user();
                 $property_data = $request->all();
+                //if there is no tenant id, then then the tenantid is null
+                if (!$request->has('tenant_id')) {
+                    $property_data['tenant_id'] = null;
+                }
                 $property_data['landlord_id'] = $landlord->id;
                 $property_data['property_images'] = $imageslink;
                 $property_data['property_amenities'] = $request->property_amenities;
