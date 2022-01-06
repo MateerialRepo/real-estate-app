@@ -108,7 +108,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/update-profile', [LandlordController::class, 'updateLandlord']); //test
             Route::post('/upload-pic', [LandlordController::class, 'uploadProfilePic']); //create and test
             Route::get('/property', [PropertyController::class, 'index']); //create and test
-            Route::get('/property/{unique_id}', [PropertyController::class, 'getProperty']); //create and test
+            Route::get('/property/{unique_id}', [PropertyController::class, 'fetchSingleProperty']); //create and test
             Route::post('/save-property', [PropertyController::class, 'createProperty']); //done
             Route::post('/update-property/{unique_id}', [PropertyController::class, 'updateProperty']); //create and test
             Route::post('/verify-property/{id}', [PropertyVerificationController::class, 'verifyProperty']); //create and test
