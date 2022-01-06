@@ -102,7 +102,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::post('/password/reset', [ForgotPasswordController::class, 'reset']);//works for both landlord and tenant
 
         Route::middleware('auth:landlord')->group(function () {
-            Route::get('/', [LandlordController::class, 'index']);
+            Route::get('/profile', [LandlordController::class, 'index']);
             Route::post('/kyc-update', [LandlordController::class, 'updateLandlordKYC']); //test
             Route::post('/password-update', [LandlordController::class, 'updatePassword']); //create and test
             Route::post('/update-profile', [LandlordController::class, 'updateLandlord']); //test

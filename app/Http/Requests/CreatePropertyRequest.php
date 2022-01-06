@@ -35,7 +35,7 @@ class CreatePropertyRequest extends FormRequest
             'street_address' => ['string', 'required'],
             'landmark' => ['string', 'required'],
             'zipcode' => ['string', 'required'],
-            'property_images' => ['required'],
+            'property_images' => ['required', 'max:2048'],
             'bedrooms' => ['string', 'required'],
             'bathrooms' => ['string', 'required'],
             'parking' => ['string', 'required'],
