@@ -77,7 +77,7 @@ class PaymentController extends Controller
 
         Property::where('id', $request->property_id)->update([
             'tenant_id'=>$request->tenant_id,
-            'is_available'=> "Occupied",
+            'is_available'=> "occupied",
         ]);
 
         $data['status'] = 'Success';
