@@ -10,7 +10,7 @@ class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['propertyVerification', 'document', 'propertyLike', 'propertyReservation','transaction'];
+    protected $with = ['propertyVerification', 'document', 'propertyLike', 'propertyReservation','transaction', 'landlord'];
 
     // Allow any field to be inserted
     protected $guarded = [];
@@ -22,6 +22,7 @@ class Property extends Model
 
     protected $fillable = [
         'landlord_id',
+        'tenant_id',
         'property_amount',
         'property_unique_id',
         'property_type',

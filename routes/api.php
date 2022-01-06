@@ -40,11 +40,6 @@ Route::get('/test', function () {
 
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
-    // payment routes
-    // Route::get('/payment/callback', [PaymentController::class, 'callback']);
-    // Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback']);
-    Route::post('/transaction', [PaymentController::class, 'saveTransactions']);
-
     // Tenant routes
     Route::prefix('v1/tenant')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
@@ -56,6 +51,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
         Route::get('/property', [PropertyController::class, 'fetchProperties']);
         //fetch single property
         Route::get('/property/{id}', [PropertyController::class, 'fetchSingleProperty']);
+
+        Route::post('/payment/transaction', [PaymentController::class, 'saveTransaction']);
 
 
         Route::middleware('auth:tenant')->group(function () {
@@ -92,6 +89,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             Route::post('/logout', [AuthController::class, 'logout']);
         });
+
+
     });
 
 

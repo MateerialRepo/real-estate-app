@@ -16,6 +16,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignId('landlord_id')->constrained();
+            $table->unsignedBigInteger('tenant_id');
             $table->string('property_unique_id');
             $table->string('property_amount');
             $table->string('property_type');
@@ -45,9 +46,13 @@ class CreatePropertiesTable extends Migration
             $table->string('side_attraction_details')->nullable();
             $table->string('is_available');
             $table->string('is_verified')->default('not verified');
-            $table->integer('tenant_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('tenant_id')
+                    ->references('id')
+                    ->on('tenants')
+                    ->onDelete('cascade');
         });
     }
 

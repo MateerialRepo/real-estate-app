@@ -14,7 +14,7 @@ class Transaction extends Model
         'property_id',
         'amount',
         'description',
-        'status'
+        'duration'
     ];
 
     

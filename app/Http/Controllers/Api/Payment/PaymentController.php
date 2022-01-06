@@ -64,19 +64,18 @@ class PaymentController extends Controller
     //save transaction data
     public function saveTransaction(Request $request){
 
+       
+
         // TenantID, Amount, PropertyID, Description
-        // $transaction = new Transaction();
-        // $transaction->tenant_id = $request->tenant_id;
-        // $transaction->property_id = $request->property_id;
-        // $transaction->amount = $request->amount;
-        // $transaction->description = $request->description;
-        // $transaction->save();
+        $transaction = Transaction::create([
+            "tenant_id" => $request->tenant_id,
+            "property_id" => $request->property_id,
+            "amount" => $request->amount,
+            "description" => $request->description,
+            "duration" => $request->duration
+        ]);
 
-        $paymentData = $request->all();
-        $transaction = Transaction::create($paymentData);
-
-        $property = Property::findorFail($request->property_id);
-        $property->update([
+        Property::where('id', $request->property_id)->update([
             'tenant_id'=>$request->tenant_id
         ]);
 

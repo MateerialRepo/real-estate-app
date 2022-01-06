@@ -123,29 +123,29 @@ class SupportTicketController extends Controller
     }
 
     // Send support mail to landlord(to fix eventually)
-    public function sendSupportMail(Request $request){
+    // public function sendSupportMail(Request $request){
 
-        try{
+    //     try{
 
-            $user = Auth::user();
+    //         $user = Auth::user();
 
-            $supportTicket = SupportTicket::find($request->id);
+    //         $supportTicket = SupportTicket::find($request->id);
 
-            $landlord = $supportTicket->landlord;
+    //         $landlord = $supportTicket->landlord;
 
-            $landlord->notify(new \App\Notifications\SupportTicket($supportTicket));
+    //         $landlord->notify(new \App\Notifications\SupportTicket($supportTicket));
 
-            $data['status'] = 'Success';
-            $data['message'] = 'Support Ticket Sent Successfully';
-            return response()->json($data, 200);
+    //         $data['status'] = 'Success';
+    //         $data['message'] = 'Support Ticket Sent Successfully';
+    //         return response()->json($data, 200);
 
-        } catch (\Exception $exception) {
+    //     } catch (\Exception $exception) {
 
-            $data['status'] = 'Failed';
-            $data['message'] = $exception->getMessage();
-            return response()->json($data, 400);
+    //         $data['status'] = 'Failed';
+    //         $data['message'] = $exception->getMessage();
+    //         return response()->json($data, 400);
 
-        }
+    //     }
 
-    }
+    // }
 }
