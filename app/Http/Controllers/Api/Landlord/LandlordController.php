@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\Landlord;
 
+use App\Models\Tenant;
 use App\Models\Ticket;
 use App\Models\Property;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Http\Controllers\Controller;
@@ -186,6 +188,47 @@ class LandlordController extends Controller
         $data['UnverifiedProperties'] = $noOfUnverifiedProperties;
         $data['AssignedTickets'] = $noOfTickets;
 
+        return response()->json($data, 200);
+    }
+
+    // get all tenants through properties
+    public function getAllTenants()
+    {
+        $landlord = Auth::user();
+        $properties = Property::where('landlord_id', $landlord->id)->get();
+        // $tenants = [];
+        $i = 0;
+        foreach ($properties as $property) {
+            $tenant[$i] = Tenant::where('id', $property->tenant_id)->get();
+            $i++;
+        }
+        $data['status'] = 'Success';
+        $data['data'] = $tenant;
+        return response()->json($data, 200);
+    }
+
+    // // get single tenant details
+    // public function getTenantDetails($id)
+    // {
+    //     $tenant = Tenant::where('id', $id)->first();
+    //     $data['status'] = 'Success';
+    //     $data['data'] = $tenant;
+    //     return response()->json($data, 200);
+    // }
+
+    // get all transaction for lanlord properties
+    public function getAllTransactions()
+    {
+        $landlord = Auth::user();
+        $properties = Property::where('landlord_id', $landlord->id)->get();
+        // $tenants = [];
+        $i = 0;
+        foreach ($properties as $property) {
+            $transaction[$i] = Transaction::where('property_id', $property->id)->get();
+            $i++;
+        }
+        $data['status'] = 'Success';
+        $data['data'] = $transaction;
         return response()->json($data, 200);
     }
 }

@@ -135,6 +135,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/support', [SupportTicketController::class, 'getLandlordSupportTicketList']);
             Route::get('/support/{id}', [SupportTicketController::class, 'getSingleSupportTicket']);
 
+            // get rented tenant details
+            Route::get('/myTenants', [LandlordController::class, 'getAllTenants']);
+            Route::get('/myTenants/{id}', [TenantController::class, 'singleTenant']);
+
             
             // Landlord Overview
             Route::get('/overview', [LandlordController::class, 'overview']);

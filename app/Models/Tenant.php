@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Property;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Tenant extends Authenticatable
@@ -14,7 +15,7 @@ class Tenant extends Authenticatable
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
 
-    protected $with = ['referee', 'nextOfKin', 'propertyLike', 'propertyReservation','transaction', 'document', 'ticket'];
+    protected $with = ['referee', 'nextOfKin', 'propertyLike', 'propertyReservation','transaction', 'document', 'ticket', 'property'];
 
     protected $fillable = [
         'first_name',
