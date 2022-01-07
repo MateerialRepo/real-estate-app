@@ -150,7 +150,7 @@ class PropertyController extends Controller
     //*************************Unprotected routes for tenants end */
     // fetch verified properties
     public function fetchProperties(){
-        $properties = Property::all();
+        $properties = Property::where('is_available', "available")->get();
         $data['status'] = 'Success';
         $data['message'] = 'Fetched properties Successfully';
         $data['properties'] = $properties;
