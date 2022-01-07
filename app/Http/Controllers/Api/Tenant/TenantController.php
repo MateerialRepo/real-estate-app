@@ -251,6 +251,7 @@ class TenantController extends Controller
                 $property = Property::where('tenant_id', $tenant->id)->first();
                 $property->update([
                     'tenant_id' => null,
+                    'is_available'=> "available",
                     ]);
     
                 $data['status'] = 'Success';

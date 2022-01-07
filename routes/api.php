@@ -88,6 +88,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             //rental card
             Route::get('/rental-card', [TenantController::class, 'activeRentalCard']);
+            Route::get('/terminate-rent', [TenantController::class, 'terminateRent']);
 
 
             Route::post('/logout', [AuthController::class, 'logout']);
