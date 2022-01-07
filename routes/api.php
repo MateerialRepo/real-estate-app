@@ -86,6 +86,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
 
+            //rental card
+            Route::get('/rental-card', [TenantController::class, 'activeRentalCard']);
+
 
             Route::post('/logout', [AuthController::class, 'logout']);
         });

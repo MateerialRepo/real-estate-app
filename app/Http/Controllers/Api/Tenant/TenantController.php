@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Api\Tenant;
 
 use App\Models\Tenant;
+use App\Models\Landlord;
+use App\Models\Property;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class TenantController extends Controller
 {
@@ -41,7 +46,21 @@ class TenantController extends Controller
      */
     public function show()
     {
-        return Auth::user();
+        $tenant = Auth::user();
+
+        $property = Property::where('tenant_id', $tenant->id)->first();
+
+        if($property){
+            $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $tenant->id)->first();
+            $rent_date = Carbon::parse($transaction->created_at);
+            $rent_expiry = $rent_date->addMonths($transaction->duration);
+            $rent_expiry = $rent_expiry->format('d-m-Y');
+            $tenant['rent_expiry'] = $rent_expiry;
+            $tenant['property'] = $property;
+            return response()->json($tenant, 200);
+        } else{
+            return Auth::user();
+        }
 
     }
 
@@ -198,9 +217,53 @@ class TenantController extends Controller
 
     }
 
-    public function destroy($id)
+    public function activeRentalCard()
     {
-        //
+        $tenant = Auth::user();
+        $property = Property::where('tenant_id', $tenant->id)->first();
+
+        if(!$property){
+            $data['status'] = 'Failed';
+            $data['message'] = 'No Active Rental';
+            return response()->json($data, 400);
+        }
+
+        $landlord = Landlord::where('id', $property->landlord_id)->first();
+        $landlord->property = "";
+        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $tenant->id)->first();
+        $rent_date = Carbon::parse($transaction->created_at);
+        $rent_expiry = $rent_date->addMonths($transaction->duration);
+        $rent_expiry = $rent_expiry->format('d-m-Y');
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Rental Card';
+        $data['property'] = $property;
+        $data['landlord'] = $landlord;
+        $data['rent_expiry'] = $rent_expiry;
+        return response()->json($data, 200);
+    }
+
+
+    public function terminateRent(){
+            
+            try{
+                $tenant = Auth::user();
+                $property = Property::where('tenant_id', $tenant->id)->first();
+                $property->update([
+                    'tenant_id' => null,
+                    ]);
+    
+                $data['status'] = 'Success';
+                $data['message'] = 'Rent Terminated Successfully';
+                return response()->json($data, 200);
+    
+            } catch (\Exception $exception) {
+    
+                $data['status'] = 'Failed';
+                $data['message'] = $exception->getMessage();
+                return response()->json($data, 400);
+            }
+    
     }
 
 

@@ -22,10 +22,11 @@ class TicketController extends Controller
             $tenant = Auth::user();
 
             $tenantRentsProperty = Property::where('tenant_id', $tenant->id)->get();
+            // dd(!$tenantRentsProperty);
 
-            if(!$tenantRentsProperty){
+            if($tenantRentsProperty->isEmpty()){
                 $data['status'] = 'Failed';
-                $data['message'] = 'Tenant has not rented any property';
+                $data['message'] = 'Un-Authorised!!! Tenant has not rented any property';
                 return response()->json($data, 401);
             }
 
