@@ -139,6 +139,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/myTenants', [LandlordController::class, 'getAllTenants']);
             Route::get('/myTenants/{id}', [TenantController::class, 'singleTenant']);
 
+            // transaction routes
+            Route::get('/transactions', [PaymentController::class, 'fetchAllLandlordTransactions']);
+
+
             
             // Landlord Overview
             Route::get('/overview', [LandlordController::class, 'overview']);

@@ -113,4 +113,21 @@ class PaymentController extends Controller
         return response()->json($data, 200);
         
     }
+
+    // all landlord's transactions
+    public function fetchAllLandlordTransactions(){
+        $landlord = Auth::user();
+        $properties = Property::where('landlord_id', $landlord->id)->get();
+        $i = 0;
+        foreach ($properties as $property) {
+            $transaction[$i] = Transaction::where('property_id', $property->id)->orderBy('created_at', 'desc')->get();
+            $i++;
+        }
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Transactions retrieved successfully';
+        $data['transactions'] = $transaction;
+        return response()->json($data, 200);
+        
+    }
 }

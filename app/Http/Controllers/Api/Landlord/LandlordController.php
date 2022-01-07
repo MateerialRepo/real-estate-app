@@ -216,19 +216,4 @@ class LandlordController extends Controller
     //     return response()->json($data, 200);
     // }
 
-    // get all transaction for lanlord properties
-    public function getAllTransactions()
-    {
-        $landlord = Auth::user();
-        $properties = Property::where('landlord_id', $landlord->id)->get();
-        // $tenants = [];
-        $i = 0;
-        foreach ($properties as $property) {
-            $transaction[$i] = Transaction::where('property_id', $property->id)->get();
-            $i++;
-        }
-        $data['status'] = 'Success';
-        $data['data'] = $transaction;
-        return response()->json($data, 200);
-    }
 }
