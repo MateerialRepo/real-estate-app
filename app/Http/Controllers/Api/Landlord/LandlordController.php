@@ -197,11 +197,13 @@ class LandlordController extends Controller
         $landlord = Auth::user();
         $properties = Property::where('landlord_id', $landlord->id)->get();
         $tenants = [];
-        $i = 0;
         foreach ($properties as $property) {
+            if($property->tenant_id == null){
+                continue;
+            }
+
             $tenant = Tenant::where('id', $property->tenant_id)->first();
             array_push($tenants, $tenant);
-            $i++;
         }
         $data['status'] = 'Success';
         $data['tenants'] = $tenants;

@@ -65,7 +65,6 @@ class PaymentController extends Controller
     public function saveTransaction(Request $request){
 
        
-
         // TenantID, Amount, PropertyID, Description
         $transaction = Transaction::create([
             "tenant_id" => $request->tenant_id,
