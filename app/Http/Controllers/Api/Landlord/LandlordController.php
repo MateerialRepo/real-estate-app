@@ -196,14 +196,15 @@ class LandlordController extends Controller
     {
         $landlord = Auth::user();
         $properties = Property::where('landlord_id', $landlord->id)->get();
-        // $tenants = [];
+        $tenants = [];
         $i = 0;
         foreach ($properties as $property) {
-            $tenant[$i] = Tenant::where('id', $property->tenant_id)->get();
+            $tenant = Tenant::where('id', $property->tenant_id)->first();
+            array_push($tenants, $tenant);
             $i++;
         }
         $data['status'] = 'Success';
-        $data['data'] = $tenant;
+        $data['tenants'] = $tenants;
         return response()->json($data, 200);
     }
 
