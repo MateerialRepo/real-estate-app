@@ -246,12 +246,7 @@ class TenantController extends Controller
             
             try{
                 $tenant = Auth::user();
-                $property = Property::where('tenant_id', $tenant->id)->first();
-                $property->update([
-                    'tenant_id' => null,
-                    'is_available'=> "available",
-                    ]);
-    
+                PropertyController::terminateTenantRent($tenant->id);
                 $data['status'] = 'Success';
                 $data['message'] = 'Rent Terminated Successfully';
                 return response()->json($data, 200);
@@ -264,6 +259,8 @@ class TenantController extends Controller
             }
     
     }
+
+    
 
 
      //*********************************Handling ADmin tenants activities*************************************************/ 

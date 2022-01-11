@@ -208,9 +208,33 @@ class LandlordController extends Controller
             $tenant->rent_expiration_date = $rentExiprationDate;
             array_push($tenants, $tenant);
         }
-        
+
         $data['status'] = 'Success';
         $data['tenants'] = $tenants;
+        return response()->json($data, 200);
+    }
+
+    //terminate tenant contract on property
+    public function terminateTenantContract($property_id)
+    {
+        try{
+            $property = Property::where('id', $property_id)->first();
+            PropertyController::terminateTenantRent($property->tenant_id);
+            $data['status'] = 'Success';
+            $data['message'] = 'Rent Terminated Successfully';
+            return response()->json($data, 200);
+
+        } catch (\Exception $exception) {
+
+            $data['status'] = 'Failed';
+            $data['message'] = $exception->getMessage();
+            return response()->json($data, 400);
+        }
+
+       
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Tenant Contract Terminated';
         return response()->json($data, 200);
     }
 

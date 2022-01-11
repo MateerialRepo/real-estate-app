@@ -117,6 +117,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/update-property/{unique_id}', [PropertyController::class, 'updateProperty']); //create and test
             Route::post('/verify-property/{id}', [PropertyVerificationController::class, 'verifyProperty']); //create and test
             Route::delete('/property/{unique_id}', [PropertyController::class, 'deleteProperty']); //create and test
+            Route::get('/terminate-rent/{property_id}', [LandlordController::class, 'terminateTenantContract']);
+
 
             // Document routes
             Route::get('/document', [DocumentController::class, 'fetchAllLandlordDocument']);

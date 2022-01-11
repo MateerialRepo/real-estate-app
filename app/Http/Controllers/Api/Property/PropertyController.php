@@ -37,6 +37,15 @@ class PropertyController extends Controller
         return $rent_expiry;
     }
 
+    // terminate tenant rent
+    public static function terminateTenantRent($tenant_id){
+        $property = Property::where('tenant_id', $tenant_id)->first();
+        $property->update([
+            'tenant_id' => null,
+            'is_available'=> "available",
+            ]);
+    }
+
 
     //save property
     public function createProperty(CreatePropertyRequest $request)
