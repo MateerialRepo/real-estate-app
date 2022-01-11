@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api\Property;
 
+use Carbon\Carbon;
+use App\Models\Ticket;
 use App\Models\Property;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreatePropertyRequest;
-use App\Models\Ticket;
 
 class PropertyController extends Controller
 {
@@ -21,6 +23,18 @@ class PropertyController extends Controller
         $data['message'] = 'Fetched all properties Successfully';
         $data['properties'] = $properties;
         return response()->json($data, 200);
+    }
+
+    //calculate expiry of rental property
+    public static function calculateExpiry($property_id)
+    {
+        $property = Property::find($property_id);
+        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $property->tenant_id)->first();
+        $rent_date = Carbon::parse($transaction->updated_at);
+        $rent_expiry = $rent_date->addMonths($transaction->duration);
+        $rent_expiry = $rent_expiry->format('d-m-Y');
+        
+        return $rent_expiry;
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Tenant;
 
+use Carbon\Carbon;
 use App\Models\Tenant;
 use App\Models\Landlord;
 use App\Models\Property;
@@ -9,11 +10,11 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use phpDocumentor\Reflection\Types\Nullable;
+use App\Http\Controllers\Api\Property\PropertyController;
 
 class TenantController extends Controller
 {
@@ -228,12 +229,9 @@ class TenantController extends Controller
             return response()->json($data, 400);
         }
 
-        $landlord = Landlord::where('id', $property->landlord_id)->first();
-        $landlord->property = "";
-        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $tenant->id)->latest();
-        $rent_date = Carbon::parse($transaction->updated_at);
-        $rent_expiry = $rent_date->addMonths($transaction->duration);
-        $rent_expiry = $rent_expiry->format('d-m-Y');
+        $landlord = Landlord::where('id', $property->landlord_id)->without('property', 'property_like', 'property_reservation', 'transaction', 'document')->first();
+        
+        $rent_expiry = PropertyController::calculateExpiry($property->id);
 
         $data['status'] = 'Success';
         $data['message'] = 'Rental Card';

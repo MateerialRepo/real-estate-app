@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Landlord;
 
+use App\Http\Controllers\Api\Property\PropertyController;
 use App\Models\Tenant;
 use App\Models\Ticket;
 use App\Models\Property;
@@ -203,8 +204,11 @@ class LandlordController extends Controller
             }
 
             $tenant = Tenant::where('id', $property->tenant_id)->first();
+            $rentExiprationDate = PropertyController::calculateExpiry($property->id);
+            $tenant->rent_expiration_date = $rentExiprationDate;
             array_push($tenants, $tenant);
         }
+        
         $data['status'] = 'Success';
         $data['tenants'] = $tenants;
         return response()->json($data, 200);
