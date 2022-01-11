@@ -76,6 +76,10 @@ class Property extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function ticket(){
+        return $this->hasMany(Ticket::class);
+    }
+
     public function propertyLike(){
         return $this->hasMany(PropertyLike::class);
     }

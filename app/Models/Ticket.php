@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tenant;
+use App\Models\Property;
+use App\Models\TicketComment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ticket extends Model
 {
@@ -24,7 +27,7 @@ class Ticket extends Model
         'ticket_category',
         'description',
         'ticket_img',
-        'landlord_id'
+        'property_id'
     ];
 
 
@@ -34,9 +37,9 @@ class Ticket extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function landlord()
+    public function property()
     {
-        return $this->belongsTo(Landlord::class);
+        return $this->belongsTo(Property::class,);
     }
 
     public function ticketComment()

@@ -28,7 +28,7 @@ class CreateTicketRequest extends FormRequest
             'ticket_category' => 'required|string',
             'description' => 'required|string',
             'ticket_img.*' => 'mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
-            'landlord_id' => 'required',
+            'property_id' => 'required',
         ];
     }
 }
