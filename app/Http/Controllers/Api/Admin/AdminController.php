@@ -97,7 +97,29 @@ class AdminController extends Controller
     }
 
 
+    public function updateAdminUser(Request $request, $id)
+    {
+        try{
+            $admin = Admin::find($id);
 
+            if (!$admin) {
+                return response()->json([
+                    'message' => 'Admin user not found'
+                ], 404);
+            }
+
+            $admin->update($request->all());
+            return response()->json([
+                'message' => 'Admin user updated successfully'
+            ], 200);
+        }
+        catch(\Exception $e){
+            $data['status'] = 'Failed';
+            $data['error'] = $e->getMessage();
+            return response()->json($data, 500);
+        }
+
+    }
 
 
     //*********************************Handling Landlord activities/functions******************************************//

@@ -163,6 +163,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/admin', [AdminController::class, 'index']);
             Route::get('/admin/{id}', [AdminController::class, 'show']);
             Route::post('/admin', [AdminController::class, 'createAdminUser']);
+            Route::post('/admin/{id}', [AdminController::class, 'updateAdminUser']);
             Route::delete('admin/{id}', [AdminController::class, 'deleteAdminUser']);
 
             // Tenant activities
