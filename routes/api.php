@@ -141,6 +141,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             // transaction routes
             Route::get('/transactions', [PaymentController::class, 'fetchAllLandlordTransactions']);
+            Route::get('/transactions/{id}', [PaymentController::class, 'fetchSingleTransaction']);
 
 
             

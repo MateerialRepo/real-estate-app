@@ -230,8 +230,8 @@ class TenantController extends Controller
 
         $landlord = Landlord::where('id', $property->landlord_id)->first();
         $landlord->property = "";
-        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $tenant->id)->first();
-        $rent_date = Carbon::parse($transaction->created_at);
+        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $tenant->id)->latest();
+        $rent_date = Carbon::parse($transaction->updated_at);
         $rent_expiry = $rent_date->addMonths($transaction->duration);
         $rent_expiry = $rent_expiry->format('d-m-Y');
 
