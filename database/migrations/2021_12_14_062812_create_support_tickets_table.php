@@ -23,6 +23,7 @@ class CreateSupportTicketsTable extends Migration
             $table->text('description');
             $table->json('img')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
