@@ -131,6 +131,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/ticket', [TicketController::class, 'fetchLandlordTickets']);
             Route::get('/ticket/{unique_id}', [TicketController::class, 'fetchSingle']);
             Route::post('/ticket/{id}/comment', [TicketCommentController::class, 'ticketComment']);
+            //assign ticket endpoint after access control is done
 
             //Support Ticket activities
             Route::post('/support', [SupportTicketController::class, 'createSupportTicket']);

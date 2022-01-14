@@ -203,7 +203,7 @@ class LandlordController extends Controller
                 continue;
             }
 
-            $tenant = Tenant::where('id', $property->tenant_id)->first();
+            $tenant = Tenant::where('id', $property->tenant_id)->with('property')->first();
             $rentExiprationDate = PropertyController::calculateExpiry($property->id);
             $tenant->rent_expiration_date = $rentExiprationDate;
             array_push($tenants, $tenant);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Ticket;
 
+use App\Models\Tenant;
 use App\Models\Ticket;
 use App\Models\Property;
 use Illuminate\Support\Str;
@@ -184,12 +185,22 @@ class TicketController extends Controller
         try {
 
             $landlord = Auth::guard('landlord')->user();
-            $tickets = Ticket::where('landlord_id', $landlord->id)
+            $Properties = Property::where('landlord_id', $landlord->id)
                 ->orderBy('created_at', 'desc')->get();
+            $response = [];
+            foreach ($Properties as $key => $property) {
+                $tickets = Ticket::where('property_id', $property->id)
+                    ->orderBy('created_at', 'desc')->get();
+                $tenant = Tenant::where('id', $property->tenant_id)->first();
+                $response[$key]['tickets'] = $tickets;
+                $response[$key]['tenant'] = $tenant;
+                $response[$key]['property'] = $property;
+            }
 
+            // dd($response);
             $data['status'] = 'Success';
             $data['message'] = 'Tickets Fetched Successfully';
-            $data['data'] = $tickets;
+            $data['data'] = array_merge(...$response);
             return response()->json($data, 200);
         } catch (\Exception $exception) {
 
