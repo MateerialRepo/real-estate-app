@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Property;
 
+use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Models\PropertyReservation;
 use App\Http\Controllers\Controller;
@@ -31,6 +32,7 @@ class PropertyReservationController extends Controller
         return response()->json($data, 200);
     }
 
+
     // fetch reserved properties
     public function fetchReservedProperties()
     {
@@ -42,6 +44,13 @@ class PropertyReservationController extends Controller
         $data['message'] = 'Property Reserved Successfully';
         $data['reservedProperties'] = $reservedProperties;
         return response()->json($data, 200);
+    }
+
+
+    //fetch reservation for landlord
+    public function landlordReservationsList(){
+        $landlord = Auth::user();
+        $LandlordProperties = Property::where('landlord_id',$landlord->id)->get();
     }
 
 }

@@ -86,6 +86,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/property/unlike/{propertyId}', [PropertyLikeController::class, 'unlikeProperty']);
             Route::post('/property/reserve/{propertyId}', [PropertyReservationController::class, 'reserveProperty']);
 
+            //trnsaction routes
+            Route::get('/transaction', [PaymentController::class, 'getTransactions']);
+
             //rental card
             Route::get('/rental-card', [TenantController::class, 'activeRentalCard']);
             Route::get('/terminate-rent', [TenantController::class, 'terminateRent']);
@@ -118,6 +121,10 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::post('/verify-property/{id}', [PropertyVerificationController::class, 'verifyProperty']); //create and test
             Route::delete('/property/{unique_id}', [PropertyController::class, 'deleteProperty']); //create and test
             Route::get('/terminate-rent/{property_id}', [LandlordController::class, 'terminateTenantContract']);
+
+            //reservation routes
+            Route::get('/reservation', [PropertyReservationController::class, '']);
+            Route::get('/reservation/{id}', [PropertyController::class, '']);
 
 
             // Document routes
