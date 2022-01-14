@@ -134,14 +134,15 @@ class PaymentController extends Controller
     // all landlord's transactions
     public function fetchAllLandlordTransactions(){
         $landlord = Auth::user();
-        $properties = Property::where('landlord_id', $landlord->id)->get();
+        $properties = Property::where('landlord_id', $landlord->id)->without('propertyVerification', 'document', 'propertyLike', 'propertyReservation','transaction')->get();
         $transactions = [];
         foreach ($properties as $property) {
             $transaction = Transaction::where('property_id', $property->id)->orderBy('created_at', 'desc')->get();
-
+            
             if(empty($transaction)){
                 continue;
             }
+            $transaction['property'] = $property;
             
             array_push($transactions, $transaction);
         }
