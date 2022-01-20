@@ -11,7 +11,7 @@ class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['propertyVerification', 'document', 'propertyLike', 'propertyReservation','transaction','tenant'];
+    protected $with = ['propertyVerification', 'document', 'propertyLike', 'propertyReservation', 'transaction', 'ticket' ];
 
     // Allow any field to be inserted
     protected $guarded = [];
@@ -57,23 +57,23 @@ class Property extends Model
     ];
 
 
-    public function tenant()
-    {
-        return $this->hasOne(Tenant::class);
-    }
+    // public function tenant()
+    // {
+    //     return $this->belongsTo(Tenant::class);
+    // }
 
-    public function landlord()
-    {
-        return $this->belongsTo(Landlord::class);
-    }
+    // public function landlord()
+    // {
+    //     return $this->belongsTo(Landlord::class);
+    // }
 
-    public function propertyVerification()
+    public function propertyVerification() 
     {
-        return $this->hasOne(PropertyVerification::class);
+        return $this->hasOne(PropertyVerification::class); //works!!
     }
 
     public function document(){
-        return $this->hasMany(Document::class);
+        return $this->hasMany(Document::class); //Works!!!
     }
 
     public function ticket(){
@@ -81,11 +81,11 @@ class Property extends Model
     }
 
     public function propertyLike(){
-        return $this->hasMany(PropertyLike::class);
+        return $this->hasMany(PropertyLike::class); //Works!!
     }
 
     public function propertyReservation(){
-        return $this->hasMany(PropertyReservation::class);
+        return $this->hasMany(PropertyReservation::class); //Works!!
     }
 
     public function transaction(){

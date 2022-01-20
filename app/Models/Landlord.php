@@ -81,6 +81,10 @@ class Landlord extends Authenticatable
         return $this->hasManyThrough(PropertyReservation::class, Property::class);
     }
 
+    // public function tenant(){
+    //     return $this->hasOneThrough(Tenant::class, Property::class);
+    // }
+
     public function transaction(){
         return $this->hasManyThrough(Transaction::class, Property::class);
     }

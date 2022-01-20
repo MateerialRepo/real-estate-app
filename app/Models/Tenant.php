@@ -81,10 +81,10 @@ class Tenant extends Authenticatable
         return $this->hasOne(NextOfKin::class);
     }
 
-        // public function property()
-        // {
-        //     return $this->belongsTo(Property::class);
-        // }
+        public function property()
+        {
+            return $this->hasMany(Property::class);
+        }
 
     public function transaction()
     {
