@@ -9,13 +9,19 @@ class PropertyReservation extends Model
 {
     use HasFactory;
 
+    protected $with = [];
+
     protected $fillable = [
         'property_id', 
         'tenant_id',
         'isReserved'
     ];
 
-    function property() {
+    public function property() {
         return $this->belongsTo(Property::class);
+    }
+
+    public function tenant(){
+        return $this->belongsTo(Tenant::class);
     }
 }

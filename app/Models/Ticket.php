@@ -13,7 +13,7 @@ class Ticket extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['ticketComment'];
+    protected $with = ['property', 'ticketComment'];
 
     protected $casts = [
         'ticket_img' => 'array',
@@ -39,8 +39,16 @@ class Ticket extends Model
 
     public function property()
     {
-        return $this->belongsTo(Property::class,);
+        return $this->belongsTo(Property::class)->with('landlord', function($query) {
+            $query->without('property', 'propertyLike', 'propertyReservation', 'transaction', 'document');
+        });
     }
+
+    //belongs to landlord through property
+    // public function landlord()
+    // {
+    //     return $this->hasOneThrough(Landlord::class, Property::class, );
+    // }
 
     public function ticketComment()
     {

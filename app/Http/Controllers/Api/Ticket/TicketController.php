@@ -132,13 +132,17 @@ class TicketController extends Controller
     {
         try {
             
-            $ticket = Ticket::where('ticket_unique_id', $unique_id)->get();
+            $ticket = Ticket::where('ticket_unique_id', $unique_id)->first();
 
             if (!$ticket) {
                 $data['status'] = 'Failed';
                 $data['message'] = 'Ticket not found';
                 return response()->json($data, 404);
             }
+
+            // dd($ticket->property['landlord_id']);
+            
+
 
             return response()->json($ticket, 200);
         } catch (\Exception $exception) {

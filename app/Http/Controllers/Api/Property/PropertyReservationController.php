@@ -46,11 +46,26 @@ class PropertyReservationController extends Controller
         return response()->json($data, 200);
     }
 
+    //fetch single reservation
+    public function fetchSingleReservation($id)
+    {
+        $reservation = PropertyReservation::find($id);
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Property Reserved Successfully';
+        $data['reservation'] = $reservation;
+        return response()->json($data, 200);
+    }
+
+
+    //**********************LANDLORD ENDPOINTS ON PROPERTY RESERVATIONS */
 
     //fetch reservation for landlord
     public function landlordReservationsList(){
-        $landlord = Auth::user();
-        $LandlordProperties = Property::where('landlord_id',$landlord->id)->get();
+        $reservations = PropertyReservation::all();
+        return $reservations;
     }
+
+    
 
 }

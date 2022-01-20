@@ -108,4 +108,6 @@ class ForgotPasswordController extends Controller
             'message' => 'Password Reset Successfully'
         ], 200);
     }
+
+    
 }

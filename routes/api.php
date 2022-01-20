@@ -41,7 +41,7 @@ Route::get('/test', function () {
 Route::group(['middleware' => ['cors', 'json.response']], function () {
 
     // Tenant routes
-    Route::prefix('v1/tenant')->group(function () {
+    Route::prefix('v1/tenant')->group(function () { 
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/password/forgot', [ForgotPasswordController::class, 'forgot']);//works for both landlord and tenant
@@ -123,8 +123,8 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/terminate-rent/{property_id}', [LandlordController::class, 'terminateTenantContract']);
 
             //reservation routes
-            Route::get('/reservation', [PropertyReservationController::class, '']);
-            Route::get('/reservation/{id}', [PropertyController::class, '']);
+            Route::get('/reservation', [PropertyReservationController::class, 'landlordReservationsList']);
+            Route::get('/reservation/{id}', [PropertyReservationController::class, 'fetchSingleReservation']);
 
 
             // Document routes

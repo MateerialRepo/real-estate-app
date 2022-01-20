@@ -113,15 +113,17 @@ class PropertyController extends Controller
 
                 $landlord = Auth::guard('landlord')->user();
                 $property_data = $request->all();
-                //if there is no tenant id, then then the tenantid is null
-                if (!$request->has('tenant_id')) {
-                    $property_data['tenant_id'] = null;
-                }
                 $property_data['landlord_id'] = $landlord->id;
                 $property_data['property_images'] = $imageslink;
                 $property_data['property_amenities'] = $request->property_amenities;
 
-                $property = Property::where('property_unique_id', $unique_id)->update($property_data);
+                $property = Property::where('property_unique_id', $unique_id)->first();
+                if($property->tenant_id){
+                    $property_data['tenant_id'] = $property->tenant_id;
+                }
+
+                $property->update($property_data);
+                
                 $data['status'] = 'Success';
                 $data['message'] = 'Property Successfully Updated';
                 $data['data'] = $property;
@@ -183,7 +185,7 @@ class PropertyController extends Controller
     //fetches a single property
     public function fetchSingleProperty($unique_id)
     {
-        $property = Property::where('property_unique_id', $unique_id)->get();
+        $property = Property::where('property_unique_id', $unique_id)->first();
         $data['status'] = 'Success';
         $data['message'] = 'Fetched property Successfully';
         $data['property'] = $property;
