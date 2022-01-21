@@ -15,6 +15,10 @@ return [
 
     'default' => env('MAIL_MAILER', 'smtp'),
 
+    'admin_email_1' => env('ADMIN_MAIL_1', 'admin@briecs.com'),
+    'admin_email_2' => env('ADMIN_MAIL_2'),
+    'admin_email_3' => env('ADMIN_MAIL_3'),
+
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations

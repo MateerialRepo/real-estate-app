@@ -209,6 +209,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
             Route::get('/support', [SupportTicketController::class, 'getSupportTickets']);
             Route::get('/support/{id}', [SupportTicketController::class, 'getSingleSupportTicket']);
 
+            //send mail
+            Route::post('/send-mail', [AdminController::class, 'sendEmailToLandlord']);
+
 
             // Transaction activities
             Route::get('/transactions', [PaymentController::class, 'fetchAllTransactions']);

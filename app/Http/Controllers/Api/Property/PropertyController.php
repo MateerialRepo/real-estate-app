@@ -29,7 +29,7 @@ class PropertyController extends Controller
     public static function calculateExpiry($property_id)
     {
         $property = Property::find($property_id);
-        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $property->tenant_id)->first();
+        $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $property->tenant_id)->latest()->first();
         $rent_date = Carbon::parse($transaction->updated_at);
         $rent_expiry = $rent_date->addMonths($transaction->duration);
         $rent_expiry = $rent_expiry->format('d-m-Y');

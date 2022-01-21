@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\PropertyReservation;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateAdminRequest;
+use App\Jobs\dispatchLandlordMailNotification;
 
 class AdminController extends Controller
 {
@@ -340,6 +341,21 @@ class AdminController extends Controller
 
         return response()->json($data, 200);
 
+
+    }
+
+
+    //send email to landlord
+    public function sendEmailToLandlord(Request $request){
+
+        $emailData = $request->all();
+
+        dispatchLandlordMailNotification::dispatch($emailData);
+
+        $data['status'] = 'Success';
+        $data['message'] = 'Email sent successfully';
+
+        return response()->json($data, 200);
 
     }
 
