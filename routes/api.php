@@ -189,7 +189,9 @@ Route::group(['middleware' => ['cors', 'json.response']], function () {
 
             // Property activities
             Route::get('/property', [AdminController::class, 'allProperties']);
+            Route::post('/property', [PropertyController::class, 'createBreicsProperty']);//create property
             Route::get('/property/{id}', [AdminController::class, 'singleProperty']);
+            Route::post('/update-property/{unique_id}', [PropertyController::class, 'updateProperty']); //create and test
             Route::get('property/reservation', [AdminController::class, 'allReservations']);
             Route::delete('/property/{id}', [AdminController::class, 'destroyProperty']);
             Route::post('/property/{id}/verify', [PropertyVerificationController::class, 'adminVerifyProperty']);

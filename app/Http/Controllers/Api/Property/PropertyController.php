@@ -192,4 +192,56 @@ class PropertyController extends Controller
         return response()->json($data, 200);
     }
 
+
+
+
+
+
+
+
+
+    //*******************Breics Managed Properties*************
+    public function createBreicsProperty(CreatePropertyRequest $request)
+    {
+        try {
+            $imageslink = [];
+
+            if ($request->has('property_images')) {
+
+                $images = $request->file('property_images');
+
+                foreach ($images as $key => $image) {
+
+                    // save each image to the server
+                    $imageName = "property" . time() . $key . '.' . $image->getClientOriginalExtension();
+
+                    $image->move(public_path('/properties/propertyImages'), $imageName);
+                    $imageslink[$key] = env('APP_URL') . '/properties/propertyImages/' . $imageName;
+                };
+            };
+
+
+            $admin = Auth::user();
+            $property_data = $request->all();
+            $property_data['landlord_id'] = $admin->id;
+            $property_data['property_unique_id'] = "Briecs-" . mt_rand(100000000, 999999999) . "-BRC";
+            $property_data['property_images'] = $imageslink;
+            $property_data['property_amenities'] = $request->property_amenities;
+            $property_data['is_verified'] = "verified";
+            $property_data['lga'] = "none";
+
+
+
+            $property = Property::create($property_data);
+            $data['status'] = 'Success';
+            $data['message'] = 'Property Successfully Created';
+            $data['data'] = $property;
+            return response()->json($data, 200);
+        } catch (\Exception $exception) {
+
+            $data['status'] = 'Failed';
+            $data['message'] = $exception->getMessage();
+            return response()->json($data, 500);
+        }
+    }
 }

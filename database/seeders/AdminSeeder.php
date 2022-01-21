@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
         Admin::create([
             'username' => "Admin",
             'email' => 'admin@breics.com',
-            'password' => Hash::make('password'),
+            'password' => bcrypt('password'),
             'role'=>'Super Admin'
         ]);
     }
