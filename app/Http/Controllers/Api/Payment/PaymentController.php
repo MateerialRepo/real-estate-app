@@ -135,7 +135,7 @@ class PaymentController extends Controller
     // all landlord's transactions
     public function fetchAllLandlordTransactions(){
         $landlord = Auth::user();
-        $landlordTransactions = Landlord::where('id', $landlord->id)->without('property', 'document', 'ticket', 'propertyLike', 'propertyReservation')->first();
+        $landlordTransactions = Landlord::where('id', $landlord->id)->without('property')->with('transaction')->first();
 
         $data['status'] = 'Success';
         $data['message'] = 'Transactions retrieved successfully';

@@ -11,7 +11,7 @@ class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['landlord','document']; //'landlord', 'tenant', 'propertyVerification', 'document', 'ticket', 'propertyLike', 'propertyReservation', 'transaction'];
+    protected $with = ['landlord','tenant']; //'landlord', 'tenant', 'propertyVerification', 'document', 'ticket', 'propertyLike', 'propertyReservation', 'transaction'];
 
     // Allow any field to be inserted
     protected $guarded = [];
