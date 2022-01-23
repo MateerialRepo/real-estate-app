@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Property;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 
@@ -15,7 +16,7 @@ class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $with = ['property', 'propertyLike', 'propertyReservation','transaction','document'];
+    protected $with = ['property', 'transaction', 'document', 'ticket', 'propertyLike', 'propertyReservation'];
 
 
     protected $fillable = [
@@ -73,6 +74,7 @@ class Landlord extends Authenticatable
         return $this->hasMany(Property::class);
     }
 
+
     public function propertyLike(){
         return $this->hasManyThrough(PropertyLike::class, Property::class);
     }
@@ -81,16 +83,12 @@ class Landlord extends Authenticatable
         return $this->hasManyThrough(PropertyReservation::class, Property::class);
     }
 
-    // public function tenant(){
-    //     return $this->hasOneThrough(Tenant::class, Property::class);
-    // }
-
     public function transaction(){
         return $this->hasManyThrough(Transaction::class, Property::class);
     }
 
     public function document(){
-        return $this->hasMany(Document::class);
+        return $this->hasManyThrough(Document::class, Property::class);
     }
     
     public function ticket(){

@@ -10,6 +10,9 @@ class TicketComment extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $with = [];
+
+
     protected $fillable = [
         'ticket_id',
         'comment',
@@ -22,4 +25,7 @@ class TicketComment extends Model
     {
         return $this->belongsTo(Ticket::class);
     }
+
+    //cereate separate columns for those likely to comment on ticket on the ticket comment model and fetch them accordingly with column specification on the ticket comment model
+
 }

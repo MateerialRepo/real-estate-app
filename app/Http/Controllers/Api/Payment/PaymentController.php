@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\Payment;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Landlord;
 use App\Models\Property;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Unicodeveloper\Paystack\Facades\Paystack;
@@ -113,9 +114,8 @@ class PaymentController extends Controller
         
     }
 
+   
     // fetch single transaction with property object
-    
-
     public function fetchSingleTransaction($id){
         $transaction = Transaction::find($id);
 
@@ -131,25 +131,15 @@ class PaymentController extends Controller
         }
     }
 
+
     // all landlord's transactions
     public function fetchAllLandlordTransactions(){
         $landlord = Auth::user();
-        $properties = Property::where('landlord_id', $landlord->id)->without('propertyVerification', 'document', 'propertyLike', 'propertyReservation','transaction')->get();
-        $transactions = [];
-        foreach ($properties as $property) {
-            $transaction = Transaction::where('property_id', $property->id)->orderBy('created_at', 'desc')->get();
-            
-            if(empty($transaction)){
-                continue;
-            }
-            $transaction['property'] = $property;
-            
-            array_push($transactions, $transaction);
-        }
+        $landlordTransactions = Landlord::where('id', $landlord->id)->without('property', 'document', 'ticket', 'propertyLike', 'propertyReservation')->first();
 
         $data['status'] = 'Success';
         $data['message'] = 'Transactions retrieved successfully';
-        $data['transactions'] = $transactions;
+        $data['transactions'] = $landlordTransactions;
         return response()->json($data, 200);
         
     }

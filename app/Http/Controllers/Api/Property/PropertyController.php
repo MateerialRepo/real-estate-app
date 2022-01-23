@@ -195,11 +195,6 @@ class PropertyController extends Controller
 
 
 
-
-
-
-
-
     //*******************Breics Managed Properties*************
     public function createBreicsProperty(CreatePropertyRequest $request)
     {

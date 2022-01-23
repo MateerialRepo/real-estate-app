@@ -10,7 +10,9 @@ class PropertyVerification extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [];
+    protected $guarded = ['property'];
+
+    protected $with = ['property'];
 
     protected $casts = [
         'property_document' => 'array'

@@ -9,6 +9,9 @@ class PropertyLike extends Model
 {
     use HasFactory;
 
+    protected $with = ['tenant', 'property'];
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,7 +23,11 @@ class PropertyLike extends Model
         'isLiked'
     ];
 
-    function property() {
+    public function property() {
         return $this->belongsTo(Property::class);
+    }
+
+    public function tenant(){
+        return $this->belongsTo(Tenant::class);
     }
 }

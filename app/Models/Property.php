@@ -11,7 +11,7 @@ class Property extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $with = ['propertyVerification', 'ticket', 'document', 'propertyLike', 'propertyReservation', 'transaction'];
+    protected $with = ['landlord','document']; //'landlord', 'tenant', 'propertyVerification', 'document', 'ticket', 'propertyLike', 'propertyReservation', 'transaction'];
 
     // Allow any field to be inserted
     protected $guarded = [];
@@ -65,6 +65,11 @@ class Property extends Model
     public function landlord()
     {
         return $this->belongsTo(Landlord::class);
+    }
+
+    public function tenant() 
+    {
+        return $this->belongsTo(Tenant::class)->withDefault(); //works!!
     }
 
     public function propertyVerification() 

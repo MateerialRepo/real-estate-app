@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    // protected $with = ['property'];
+    protected $with = ['property', 'tenant'];
 
 
     protected $fillable = [
@@ -23,6 +23,10 @@ class Transaction extends Model
 
     
     public function property(){
-        $this->belongsTo(Property::class);
+       return $this->belongsTo(Property::class);
+    }
+
+    public function tenant(){
+       return $this->belongsTo(Tenant::class);
     }
 }
