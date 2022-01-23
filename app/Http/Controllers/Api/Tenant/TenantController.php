@@ -294,7 +294,7 @@ class TenantController extends Controller
  
              $data['status'] = 'Success';
              $data['message'] = 'Tenant retrieved successfully';
-             $data['data'] = $tenant->find($id);
+             $data['data'] = $tenant->find($id)->with('referee', 'nextOfKin', 'propertyLike', 'propertyReservation','transaction', 'document', 'ticket')->get();
              return response()->json($data, 200);
  
          } catch (\Exception $e) {
