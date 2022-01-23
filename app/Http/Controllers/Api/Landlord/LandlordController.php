@@ -20,7 +20,7 @@ class LandlordController extends Controller
 {
 
     public function index(){
-        $landlord = Auth::user();
+        $landlord = Auth::user()->with('property', 'document', 'ticket', 'propertyLike', 'propertyReservation', 'transaction' )->first();
         return response()->json($landlord);
     }
 

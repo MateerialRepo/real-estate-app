@@ -16,7 +16,7 @@ class LandlordAuthController extends Controller
     {
         try{
 
-            $landlord = Landlord::where('email', request()->email)->first();
+            $landlord = Landlord::where('email', request()->email)->with('property', 'document', 'ticket', 'propertyLike', 'propertyReservation', 'transaction' )->first();
 
             if (!$landlord) {
                 return response()->json([

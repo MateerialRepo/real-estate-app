@@ -16,7 +16,7 @@ class Landlord extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $with = ['property'];
+    protected $with = [];
 
 
     protected $fillable = [
