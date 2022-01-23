@@ -139,7 +139,7 @@ class PaymentController extends Controller
 
         $data['status'] = 'Success';
         $data['message'] = 'Transactions retrieved successfully';
-        $data['transactions'] = $landlordTransactions;
+        $data['transactions'] = $landlordTransactions->transaction;
         return response()->json($data, 200);
         
     }

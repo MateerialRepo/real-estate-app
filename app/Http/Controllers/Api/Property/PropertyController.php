@@ -30,7 +30,11 @@ class PropertyController extends Controller
     {
         $property = Property::find($property_id);
         $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $property->tenant_id)->latest()->first();
-        $rent_date = Carbon::parse($transaction->updated_at);
+        if($transaction->updated_at){
+            $rent_date = Carbon::parse($transaction->updated_at);
+        }else{
+            $rent_date = Carbon::parse($transaction->created_at);
+        }
         $rent_expiry = $rent_date->addMonths($transaction->duration);
         $rent_expiry = $rent_expiry->format('d-m-Y');
         
