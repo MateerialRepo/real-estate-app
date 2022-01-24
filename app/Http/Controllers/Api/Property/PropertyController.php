@@ -36,7 +36,8 @@ class PropertyController extends Controller
             $rent_date = Carbon::parse($transaction->created_at);
         }
         $rent_expiry = $rent_date->addMonths($transaction->duration);
-        $rent_expiry = $rent_expiry->format('d-m-Y');
+        // $rent_expiry = $rent_expiry->format('d-m-Y');
+        $rent_expiry = $rent_expiry->format('F m, Y');
         
         return $rent_expiry;
     }
