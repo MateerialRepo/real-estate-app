@@ -31,7 +31,7 @@ class PropertyController extends Controller
         $property = Property::find($property_id);
         $transaction = Transaction::where('property_id', $property->id)->where('tenant_id', $property->tenant_id)->latest()->first();
         if(!$transaction) {
-            $rent_expiry = 'No Rent';
+            $rent_expiry = 'No Rent transaction found';
             return $rent_expiry;
         }
         
