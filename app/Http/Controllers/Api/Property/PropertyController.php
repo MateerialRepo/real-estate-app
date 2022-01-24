@@ -189,7 +189,8 @@ class PropertyController extends Controller
     //fetches a single property
     public function fetchSingleProperty($unique_id)
     {
-        $property = Property::where('property_unique_id', $unique_id)->first();
+        $property = Property::where('property_unique_id', $unique_id)->with('document', 'ticket', 'transaction')->withCount('propertyLike', 'propertyReservation')->first();
+        $property['rent_expiry'] = PropertyController::calculateExpiry($property->id);
         $data['status'] = 'Success';
         $data['message'] = 'Fetched property Successfully';
         $data['property'] = $property;
