@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AlterCommenterIdColumnInTicketCommentsTable extends Migration
+class DropCommenterIdColumnInTicketCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +14,8 @@ class AlterCommenterIdColumnInTicketCommentsTable extends Migration
     public function up()
     {
         Schema::table('ticket_comments', function (Blueprint $table) {
-            $table->json('commenter_id')->nullable()->after('comment');
+            //
+            $table->dropColumn('commenter_id');
         });
     }
 
@@ -28,7 +28,7 @@ class AlterCommenterIdColumnInTicketCommentsTable extends Migration
     {
         Schema::table('ticket_comments', function (Blueprint $table) {
             //
-            $table->dropColumn('commenter_id')->nullable();
+            $table->string('commenter_id')->nullable();
         });
     }
 }
