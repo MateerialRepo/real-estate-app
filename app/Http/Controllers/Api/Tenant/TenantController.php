@@ -288,11 +288,11 @@ class TenantController extends Controller
          
      }
  
-     public function singleTenant(Tenant $tenant, $id)
+     public function singleTenant(Tenant $tenant, $unique_id)
      {
          try{
 
-            $tenantObject = $tenant->find($id)->with('property','referee', 'nextOfKin','transaction', 'document', 'ticket')->withCount('propertyLike', 'propertyReservation')->first();
+            $tenantObject = $tenant->where('tenant_unique_id',$unique_id)->with('property','referee', 'nextOfKin','transaction', 'document', 'ticket')->withCount('propertyLike', 'propertyReservation')->first();
             // $tenantObject = $tenant->find($id)->withCount('propertyLike', 'propertyReservation')->first();
             $tenantObject['rent_expiry'] = PropertyController::calculateExpiry($tenantObject->property->id);
 
