@@ -291,10 +291,14 @@ class TenantController extends Controller
      public function singleTenant(Tenant $tenant, $id)
      {
          try{
- 
+
+            $tenantObject = $tenant->find($id)->with('property','referee', 'nextOfKin','transaction', 'document', 'ticket')->withCount('propertyLike', 'propertyReservation')->first();
+            // $tenantObject = $tenant->find($id)->withCount('propertyLike', 'propertyReservation')->first();
+            $tenantObject['rent_expiry'] = PropertyController::calculateExpiry($tenantObject->property->id);
+
              $data['status'] = 'Success';
              $data['message'] = 'Tenant retrieved successfully';
-             $data['data'] = $tenant->find($id)->with('referee', 'nextOfKin', 'propertyLike', 'propertyReservation','transaction', 'document', 'ticket')->get();
+             $data['data'] = $tenantObject;
              return response()->json($data, 200);
  
          } catch (\Exception $e) {
