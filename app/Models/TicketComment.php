@@ -12,6 +12,9 @@ class TicketComment extends Model
 
     protected $with = [];
 
+    protected $casts = [
+        'commenter_id' => 'array',
+    ];
 
     protected $fillable = [
         'ticket_id',

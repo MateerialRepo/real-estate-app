@@ -27,7 +27,7 @@ class TicketCommentController extends Controller
 
             TicketComment::create([
                 'ticket_id' => $id,
-                'commenter_id' => $user->id,
+                'commenter_id' => [$user->id, $user->first_name . ' ' . $user->last_name, $user->profile_pic],
                 'comment' => $request->comment
             ]);
 
