@@ -129,7 +129,7 @@ class AdminController extends Controller
         try {
             $data['status'] = 'Success';
             $data['message'] = 'Landlords retrieved successfully';
-            $data['data'] = Landlord::orderBy('created_at', 'desc')->get();
+            $data['data'] = Landlord::with('property', 'document', 'ticket', 'transaction')->withCount('propertyLike', 'propertyReservation')->orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -148,7 +148,7 @@ class AdminController extends Controller
 
             $data['status'] = 'Success';
             $data['message'] = 'Landlord retrieved successfully';
-            $data['data'] = $landlord->find($id);
+            $data['data'] = $landlord->find($id)->with('property', 'document', 'ticket', 'transaction')->withCount('propertyLike', 'propertyReservation')->first();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -181,7 +181,7 @@ class AdminController extends Controller
         try{
             $data['status'] = 'Success';
             $data['message'] = 'Properties retrieved successfully';
-            $data['data'] = Property::orderBy('created_at', 'desc')->get();
+            $data['data'] = Property::with('document', 'ticket', 'transaction')->withCount('propertyLike', 'propertyReservation')->orderBy('created_at', 'desc')->get();
             return response()->json($data, 200);
 
         } catch (\Exception $e) {
@@ -199,7 +199,7 @@ class AdminController extends Controller
         try{
                 $data['status'] = 'Success';
                 $data['message'] = 'Property retrieved successfully';
-                $data['data'] = $property->find($id);
+                $data['data'] = $property->find($id)->with('document', 'ticket', 'transaction')->withCount('propertyLike', 'propertyReservation')->orderBy('created_at', 'desc')->first();
                 return response()->json($data, 200);
 
         } catch (\Exception $e) {
