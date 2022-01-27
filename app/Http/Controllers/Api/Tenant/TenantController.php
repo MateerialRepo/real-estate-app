@@ -272,7 +272,7 @@ class TenantController extends Controller
  
              $data['status'] = 'Success';
              $data['message'] = 'Tenants retrieved successfully';
-             $data['data'] = Tenant::orderBy('created_at', 'desc')->get();
+             $data['data'] = Tenant::with('property','referee', 'nextOfKin','transaction', 'document', 'ticket')->withCount('propertyLike', 'propertyReservation')->orderBy('created_at', 'desc')->get();
             // $data['data'] = DB::table('tenants')->get();
  
          } catch (\Exception $e) {
