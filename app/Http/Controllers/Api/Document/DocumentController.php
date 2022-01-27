@@ -258,7 +258,7 @@ class DocumentController extends Controller
     //fetch all documents latest first
     public function fetchAllDocument()
     {
-        $documents = Document::all()->orderBy('created_at', 'desc')->get();
+        $documents = Document::orderBy('created_at', 'desc')->get();
 
         $data['status'] = 'Success';
         $data['message'] = 'Documents Fetched Successfully';

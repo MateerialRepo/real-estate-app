@@ -9,7 +9,7 @@ class PropertyReservation extends Model
 {
     use HasFactory;
 
-    protected $with = ['tenant', 'property'];
+    // protected $with = ['tenant', 'property'];
 
     protected $fillable = [
         'property_id', 
