@@ -12,6 +12,8 @@ class Document extends Model
 
     protected $guarded = [];
 
+    protected $with = ['tenant', 'property', 'landlord'];
+
     protected $fillable = [
         'tenant_id',
         'property_id',
@@ -27,16 +29,16 @@ class Document extends Model
 
     public function property()
     {
-        return $this->belongsTo(Property::class);
+        return $this->belongsTo(Property::class, 'property_id');
     }
 
     public function tenant()
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 
     public function landlord()
     {
-        return $this->belongsTo(Landlord::class);
+        return $this->belongsTo(Landlord::class, 'landlord_id');
     }
 }
